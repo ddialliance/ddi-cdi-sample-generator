@@ -9,42 +9,24 @@
 </head>
 <body>
     <h1>DDI-CDI sample generator</h1>
+    
     <div id="app">
+        <textarea v-model="rawData" rows="7" style="font-family: monospace;" disabled></textarea>
         <div v-for="column in columns">
-        <code v-html="column.label"></code>
-        <input type="text" v-model="column.description" />
-        <select v-model="column.role">
-            <option v-for="role in colRoles" :value="role.id">{{ role.id }}</option>
-        </select>
-        <select v-model="column.type">
-            <option v-for="type in colTypes" :value="type.id">{{ type.id }}</option>
-        </select>
+            <code v-html="column.label"></code>
+            <input type="text" v-model="column.description" />
+            <select v-model="column.role">
+                <option v-for="role in colRoles" :value="role.id">{{ role.id }}</option>
+            </select>
+            <select v-model="column.type">
+                <option v-for="type in colTypes" :value="type.id">{{ type.id }}</option>
+            </select>
         </div>
         <h5>JSON-debug</h5>
         <pre v-html="jsonDebug"></pre>
     </div>
 
-    <script>
-    const { createApp, ref, reactive, computed } = Vue
-
-    createApp({
-        setup() {
-            const colRoles = [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}]
-            const colTypes = [{id:'Coded'}, {id:'Numeric'}, {id:'Time'}, {id:'Text'}]
-            const columns = reactive([
-                {label:'var1', description:null, role:null, type:null},
-                {label:'var2', description:null, role:null, type:null}
-            ])
-
-            const jsonDebug = computed(() => {
-                return JSON.stringify(columns,null,2)
-            })
-            return {
-                colRoles, colTypes, columns, jsonDebug
-            }
-        }
-    }).mount('#app')
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
 
