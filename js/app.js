@@ -7,15 +7,16 @@ class Col{
     hasIndendedDataType
     role
     constructor(id){
-        this.id = id
+        
         if(isNaN(id)){
             this.displayLabel = id
         }
+        this.id = '#' + id.replace(/\W/g,'_')
         
     }
     toJSON(){
         var variable = {
-            '@id': '#'+this.id,
+            '@id': this.id,
             '@type': 'InstanceVariable',
             displayLabel: this.displayLabel,
             descriptiveText: this.descriptiveText
@@ -65,7 +66,7 @@ createApp({
                 logicalRecord['has'].push({'@id': c.id})
             }
 
-            cdi['@graph'].push(columns)
+            cdi['@graph'] = cdi['@graph'].concat(columns)
             cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
         
 
