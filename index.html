@@ -13,14 +13,13 @@
     <h1>DDI-CDI sample generator for multi-dimensional data tables</h1>
     
     <div id="app">
-        <textarea v-model="rawData" class="csvContent" disabled></textarea>
+        <textarea v-model="input.raw" class="csvContent" disabled></textarea>
 		
 		<div class="upload">
 			<label  id="csvFileLabel" for="csvFile">Select a CSV file</label>
 			<input type="file" id="csvFile" name="csvFile"/>
 			<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
 			<label  id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
-
 		</div>
 		
 		<div class="columnEditingWrapper">

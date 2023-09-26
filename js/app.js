@@ -6,6 +6,7 @@ class Col{
     descriptiveText
     hasIndendedDataType
     role
+    values = []
     constructor(id){
         if(isNaN(id)){
             this.displayLabel = id
@@ -25,18 +26,27 @@ class Col{
         return variable
     }
 }
+/* TODO: add dimensional stuff 
+DimensionalDataStructure [has] DataStructureComponent (DimensionComponent, AttributeComponet, MeasureComponent)
+DimensionComponent
+AttributeComponent
+MeasureComponent
+ComponentPosition
+RepresentedVariable (or use InstanceVariable to represent this)
+Representations (SKOS:ConceptScheme for enumerated variables)
+*/
 
 createApp({
     mounted(){
-        var csv = CSVToArray(this.rawData, this.delimiter)
+        var csv = CSVToArray(this.input.raw, this.delimiter)
         csv[0].forEach((id) =>{this.columns.push(new Col(id))})
     },
     setup() {
         const delimiter = ','
         const lang = reactive({id:'en', label: 'English'})
-        const rawData = reactive("Frequency,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000")
-        const parsedData = computed(() => {
-            return CSVToArray(rawData, delimiter)
+        const input = reactive({
+            id: "test.csv",
+            raw:"Frequency,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
         })
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
@@ -94,7 +104,7 @@ createApp({
         })
 
         return {
-            rawData, cv, columns, cdiOutput, parsedData
+            input, cv, columns, cdiOutput
         }
     }
 }).mount('#app')

@@ -81,3 +81,9 @@ function CSVToArray(strData, strDelimiter){
     // Return the parsed data.
     return( arrData );
 }
+
+function guessType(values){
+    if(values.every(Number.isInteger)) return 'Integer';
+    if(values.every(i => typeof i === "string")) return 'String';
+    
+}
