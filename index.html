@@ -15,6 +15,14 @@
     <div id="app">
         <textarea v-model="rawData" class="csvContent" disabled></textarea>
 		
+		<div class="upload">
+			<label  id="csvFileLabel" for="csvFile">Select a CSV file</label>
+			<input type="file" id="csvFile" name="csvFile"/>
+			<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
+			<label  id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
+			
+		</div>
+		
 		<div class="columnEditingWrapper">
 			<div v-for="column in columns" class="columnEditing">
 				<input type="text" style="width: 20%;" v-model="column.displayLabel" class="displayLabel"></code>
