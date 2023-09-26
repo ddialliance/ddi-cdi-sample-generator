@@ -31,7 +31,7 @@
 					<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
 				</select>
 				<select v-model="column.hasIndendedDataType" class="IntendedDataType">
-					<option v-for="type in cv.colTypes" :value="type.id">{{ type.id }}</option>
+					<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
 				</select>
 			</div>
 		</div>
