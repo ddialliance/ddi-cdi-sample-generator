@@ -14,20 +14,23 @@ class Col{
         
     }
     toJSON(){
-        return {
+        var variable = {
             '@id': '#'+this.id,
             '@type': 'InstanceVariable',
             displayLabel: this.displayLabel,
-            descriptiveText: this.descriptiveText,
-            hasIndendedDataType: this.hasIndendedDataType
+            descriptiveText: this.descriptiveText
         }
+        if(this.hasIndendedDataType){
+            variable.hasIndendedDataType = {'@id': this.hasIndendedDataType}
+        }
+        return variable
     }
 }
 
 createApp({
     mounted(){
         var csv = CSVToArray(this.rawData, this.delimiter)
-        csv[0].forEach((id) =>{this.columns.push(new Col(id))});
+        csv[0].forEach((id) =>{this.columns.push(new Col(id))})
     },
     setup() {
         const delimiter = ','
@@ -38,7 +41,12 @@ createApp({
         })
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
-            colTypes : [{id:'Coded', uri:"https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, {id:'Numeric'}, {id:'Time'}, {id:'Text'}]
+            colTypes : [
+                {label:'Coded', id: "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, 
+                {label:'Integer', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Integer"}, 
+                {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}, 
+                {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"}
+            ]
         }
         const columns = reactive([])
 
@@ -58,8 +66,31 @@ createApp({
             }
 
             cdi['@graph'].push(columns)
-            cdi['@graph'].push(logicalRecord)
+            cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
         
+
+            var dataset = {
+                '@id' : "#dataset",
+                "@type": "DimensionalDataSet",
+                'has' : []
+            }
+
+            var dimensionalKeys = []
+
+            for(const c of columns){
+                if(c.role == 'Dimension'){
+                    var id = "#dimensionalKey-"+c.id
+                    dimensionalKeys.push({
+                        '@id' : id,
+                        '@type' : 'DimensionalKey'
+                    })
+                    dataset['has'].push({'@id' : id})
+                }
+            }
+
+            cdi['@graph'] = cdi['@graph'].concat(dataset)
+            cdi['@graph'] = cdi['@graph'].concat(dimensionalKeys)
+
             return JSON.stringify(cdi, null, 2)
         })
 
