@@ -12,6 +12,7 @@
     
     <div id="app">
         <textarea v-model="rawData" rows="7" style="font-family: monospace;" disabled></textarea>
+        
         <div v-for="column in columns">
             <code v-html="column.label"></code>
             <input type="text" v-model="column.description" />
@@ -22,13 +23,11 @@
                 <option v-for="type in cv.colTypes" :value="type.id">{{ type.id }}</option>
             </select>
         </div>
+        
         <h5>JSON-debug</h5>
         <pre v-html="jsonDebug"></pre>
     </div>
-
+    <script src="js/utils.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
-
-
-
