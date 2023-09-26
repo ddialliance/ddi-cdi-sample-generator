@@ -16,10 +16,10 @@
             <code v-html="column.label"></code>
             <input type="text" v-model="column.description" />
             <select v-model="column.role">
-                <option v-for="role in colRoles" :value="role.id">{{ role.id }}</option>
+                <option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
             </select>
             <select v-model="column.type">
-                <option v-for="type in colTypes" :value="type.id">{{ type.id }}</option>
+                <option v-for="type in cv.colTypes" :value="type.id">{{ type.id }}</option>
             </select>
         </div>
         <h5>JSON-debug</h5>
