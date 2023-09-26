@@ -1,5 +1,11 @@
-body {}
+body {
+	grid-template-columns: max-content;
+	padding-left: 20px;
+}
 
-.csv-content {
+.csvContent {
 	font-family: monospace;
+	float: right;
+	width: 30% !important;
+	height: 100%;
 }
