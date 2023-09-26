@@ -7,5 +7,23 @@ body {
 	font-family: monospace;
 	float: right;
 	width: 30% !important;
-	height: 100%;
+	height: 72%;
+}
+
+.columnEditingWrapper {
+	height: 30%;
+	overflow: auto;
+}
+
+.jsonResult {
+	height:40%;
+}
+
+h5 {
+	display: none;
+}
+
+#app {
+	padding: 20px;
+	height: 66%;
 }
