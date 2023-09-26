@@ -13,6 +13,8 @@
     <h1>DDI-CDI sample generator</h1>
     
     <div id="app">
+        <textarea v-model="rawData" class="csv-content" disabled></textarea>
+		
         <div v-for="column in columns">
             <input type="text" style="width: 20%;" v-model="column.displayLabel" class="displayLabel"></code>
             <input type="text" v-model="column.descriptiveText" class="descriptiveText"/>
@@ -24,8 +26,6 @@
             </select>
         </div>
         
-        <textarea v-model="rawData" class="csv-content" disabled></textarea>
-
         <h5>JSON-debug</h5>
         <pre v-html="jsonDebug" class="jsonResult"></pre>
     </div>
