@@ -15,16 +15,18 @@
     <div id="app">
         <textarea v-model="rawData" class="csvContent" disabled></textarea>
 		
-        <div v-for="column in columns" class="columnEditing">
-            <input type="text" style="width: 20%;" v-model="column.displayLabel" class="displayLabel"></code>
-            <input type="text" v-model="column.descriptiveText" class="descriptiveText"/>
-            <select v-model="column.role" class="role">
-                <option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
-            </select>
-            <select v-model="column.hasIndendedDataType" class="IntendedDataType">
-                <option v-for="type in cv.colTypes" :value="type.id">{{ type.id }}</option>
-            </select>
-        </div>
+		<div class="columnEditingWrapper">
+			<div v-for="column in columns" class="columnEditing">
+				<input type="text" style="width: 20%;" v-model="column.displayLabel" class="displayLabel"></code>
+				<input type="text" v-model="column.descriptiveText" class="descriptiveText"/>
+				<select v-model="column.role" class="role">
+					<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
+				</select>
+				<select v-model="column.hasIndendedDataType" class="IntendedDataType">
+					<option v-for="type in cv.colTypes" :value="type.id">{{ type.id }}</option>
+				</select>
+			</div>
+		</div>
         
         <h5>JSON-debug</h5>
         <pre v-html="jsonDebug" class="jsonResult"></pre>
