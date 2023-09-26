@@ -7,12 +7,10 @@ class Col{
     hasIndendedDataType
     role
     constructor(id){
-        
         if(isNaN(id)){
             this.displayLabel = id
         }
         this.id = '#' + id.replace(/\W/g,'_')
-        
     }
     toJSON(){
         var variable = {
@@ -51,7 +49,7 @@ createApp({
         }
         const columns = reactive([])
 
-        const jsonDebug = computed(() => {
+        const cdiOutput = computed(() => {
             var cdi = {
                 '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
                 '@graph':[]
@@ -96,7 +94,7 @@ createApp({
         })
 
         return {
-            rawData, cv, columns, jsonDebug, parsedData
+            rawData, cv, columns, cdiOutput, parsedData
         }
     }
 }).mount('#app')
