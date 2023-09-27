@@ -54,9 +54,10 @@
 			</div>
 		</nav>
 		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center" role="alert">
-			<span>ℹ️</span>
+			
 			<div>
-				Open a csv file of load example from the top menu
+				<span>ℹ️</span> Open a csv file of load example from the top menu<br/>
+				Why not try the file <a href="#" @click="loadExample(examples[0])">test.csv</a>?
 			</div>
 		</div>
 		<div v-if="input.id != null">

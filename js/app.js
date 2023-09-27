@@ -61,9 +61,9 @@ createApp({
             input.click();
         },
         saveCdi(){
-            var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'text/plain' });
+            var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' });
             //TODO: generate smart filename
-            var fileNameToSaveAs = "cdi.txt"; //filename.extension
+            var fileNameToSaveAs = this.input.id.replace('.csv', '.jsonld'); //filename.extension
           
             var downloadLink = document.createElement("a");
             downloadLink.download = fileNameToSaveAs;
