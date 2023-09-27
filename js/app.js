@@ -102,9 +102,7 @@ createApp({
                         '@type' : 'DimensionalKey'
                     })
                     dataset['has'].push({'@id' : id})
-                }
-                if(c.role == 'Dimension'){
-                    var id = "#dimensionComponent-"+c.id
+                    id = "#dimensionComponent-"+c.id
                     components.push({
                         '@id' : id,
                         '@type' : 'DimensionComponent',
