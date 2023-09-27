@@ -71,17 +71,18 @@ createApp({
                 '@graph':[]
             }
 			var dataStore= {
-				'@id' : '#dataStore'
-				'@type' : 'DataStore'
-				'recordCount' : 'XXXXXXXX'
+				'@id' : '#dataStore',
+				'@type' : 'DataStore',
+				'recordCount' : 'XXXXXXXX',
+                'has' : []
 			}
 			dataStore['has'].push({'@id' : '#logicalRecord'})
 			
             var physicalDataset = {
                 '@id' : "#physicalDataset",
                 '@type': "PhysicalDataset",
-				'formats' : '#dataStore'
-				'physicalFileName' : input.id
+				'formats' : '#dataStore',
+				'physicalFileName' : input.id,
                 'has' : []
             }
 
