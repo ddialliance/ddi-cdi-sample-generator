@@ -61,9 +61,8 @@ createApp({
             input.click();
         },
         loadExample(example){
-            console.log("loadExample")
-            console.log(example)
-            this.input = example
+            this.input.raw = example.raw
+            this.input.id = example.id
             this.reloadCsv()
         },
         reloadCsv(){
@@ -85,16 +84,16 @@ createApp({
     setup() {
         const delimiter = ','
         const lang = reactive({id:'en', label: 'English'})
-        const examples = reactive([
+        const examples = [
             {
                 id: 'test.csv',
                 raw:"Frequency,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
             },
             {
                 id: 'tiny.csv',
-                raw:"AAAA,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
+                raw:"id,name,value\n0,Pelle,13\n1,Claus,15"
             }
-        ])
+        ]
         const input = reactive({
             id: null,
             raw:""
