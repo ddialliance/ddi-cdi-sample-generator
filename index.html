@@ -32,7 +32,7 @@
 							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
 						</li>
 						<li class="nav-item">
-							<button @click="saveCdi()" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
+							<button @click="saveCdi()" :disabled="input.id == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
