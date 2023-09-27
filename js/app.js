@@ -90,12 +90,14 @@ createApp({
             if(this.input.id == null) return;
             
             var csv = CSVToArray(this.input.raw, this.delimiter)
+            //TODO: this should be tested for header/no header
+            this.recordCount = (csv.length - 1)
+            this.columns.splice(0)
             var pos = 0
-            this.columns = []
-            csv[0].forEach((id) =>{
+            for(const id of csv[0]){
                 this.columns.push(new Col(id, pos))
                 pos++
-            })
+            }
         }
     },
     mounted(){
@@ -132,6 +134,7 @@ createApp({
             ]
         }
         const columns = reactive([])
+        const recordCount = ref(0)
 
         const cdiOutput = computed(() => {
             var cdi = {
@@ -141,7 +144,7 @@ createApp({
 			var dataStore= {
 				'@id' : '#dataStore',
 				'@type' : 'DataStore',
-				'recordCount' : 'XXXXXXXX',
+				'recordCount' : recordCount.value,
                 'has' : []
 			}
 			dataStore['has'].push({'@id' : '#logicalRecord'})
@@ -237,7 +240,7 @@ createApp({
         })
 
         return {
-            input, cv, examples, columns, cdiOutput
+            input, recordCount, cv, examples, columns, cdiOutput
         }
     }
 }).mount('#app')
