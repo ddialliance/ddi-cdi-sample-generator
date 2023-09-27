@@ -5,40 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DDI-CDI Sample generator</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <link rel="stylesheet" href="css/application.css">
+    <!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="css/application.css">-->
     <script src="js/lib/utils.js"></script>
 </head>
-<body>
+<body id="app">
+	<!--
     <h1>DDI-CDI sample generator for multi-dimensional data tables</h1>
-    
-    <div id="app">
-        <textarea v-model="input.raw" class="csvContent" disabled></textarea>
-		
-		<div class="upload">
-			<label  id="csvFileLabel" for="csvFile">Select a CSV file</label>
-			<input type="file" id="csvFile" name="csvFile"/>
-			<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
-			<label  id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
+-->
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">DDI-CDI demo</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				  <li class="nav-item">
+					<button type="button" class="btn btn-light" title="open csv">📂 open csv</button>
+				  </li>
+				  <li class="nav-item">
+					<button type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save</button>
+				  </li>
+				  <li>
+					<button type="button" class="btn btn-danger" title="send json-ld to Arofan">📧 Send to Arofan</button>
+				  </li>
+				</ul>
+			</div>	
 		</div>
+	</nav>
 		
-		<div class="columnEditingWrapper">
-			<div v-for="column in columns" class="columnEditing">
-				<input type="text" style="width: 20%;" v-model="column.displayLabel" class="displayLabel"></code>
-				<input type="text" v-model="column.descriptiveText" class="descriptiveText"/>
-				<select v-model="column.role" class="role">
+	<form>
+		<div class="row" v-for="column in columns">
+			<div class="col-md-1">
+				<label class="form-label" v-if="column.position == 0">Position</label>
+				<input v-model="column.position" type="text" class="form-control" value="0" disabled>
+			</div>
+			<div class="col-md-2">
+				<label class="form-label" v-if="column.position == 0">Label</label>
+				<input v-model="column.displayLabel" type="text" class="form-control">
+			</div>
+			<div class="col-md-5">
+				<label class="form-label" v-if="column.position == 0">Description</label>
+				<input v-model="column.descriptiveText" type="text" class="form-control">
+			</div>
+			<div class="col-md-2">
+				<label class="form-label" v-if="column.position == 0">Role</label>
+				<select v-model="column.role" class="form-select" aria-label="Default select example">
 					<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
 				</select>
-				<select v-model="column.hasIndendedDataType" class="IntendedDataType">
+			</div>
+			<div class="col-md-2">
+				<label class="form-label" v-if="column.position == 0">Type</label>
+				<select v-model="column.hasIndendedDataType" class="form-select" aria-label="Default select example">
 					<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
 				</select>
 			</div>
 		</div>
-        
-        <h5>DDI-CDI json-ld 🐛 (debug)</h5>
-        <pre v-html="cdiOutput" class="jsonResult"></pre>
-    </div>
+	</form>		  
+<!--	
+	<div class="upload">
+		<label id="csvFileLabel" for="csvFile">Select a CSV file</label>
+		<input type="file" id="csvFile" name="csvFile"/>	
+		<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
+		<label id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
+	</div>
+	-->
 
+	<input type="file" id="csvFile" name="csvFile"/>
+	
+	<div class="form-floating mb-3">
+		<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control" placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px" disabled>Disabled textarea with some text inside</textarea>
+		<label for="ddiCdiOutput">DDI-CDI (json-ld) <a href="#" title="copy json-ld to clipboard">📋</a></label>
+	</div>
+	<div class="form-floating mb-3">
+		<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv" id="importedCsv" style="height: 100px" disabled>Disabled textarea with some text inside</textarea>
+		<label v-html="input.id" for="importedCsv"></label>
+	</div>
     <script src="js/app.js"></script>
 </body>
 </html>
