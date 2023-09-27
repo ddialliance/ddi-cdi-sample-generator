@@ -32,7 +32,7 @@
 							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
+							<button @click="saveCdi()" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -53,8 +53,11 @@
 				</div>
 			</div>
 		</nav>
-		<div v-if="input.id == null">
-			ℹ️ open a file or load an example
+		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center" role="alert">
+			<span>ℹ️</span>
+			<div>
+				Open a csv file of load example from the top menu
+			</div>
 		</div>
 		<div v-if="input.id != null">
 			<form>
