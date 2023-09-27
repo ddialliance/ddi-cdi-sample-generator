@@ -83,7 +83,11 @@ function CSVToArray(strData, strDelimiter){
 }
 
 function guessType(values){
-    if(values.every(Number.isInteger)) return 'Integer';
-    if(values.every(i => typeof i === "string")) return 'String';
-    
+    const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
+    // TODO:  guess for "DateTime"
+    if(values.every(Number.isInteger)) return base + 'Integer';
+    if(values.every(i => typeof i === "string")) return  base +'String';
+
+    // TODO: guess for a codelist (check for repeated values) "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme";
+    return null;
 }
