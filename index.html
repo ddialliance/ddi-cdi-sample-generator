@@ -37,11 +37,11 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 								aria-expanded="false">
-								🗃️ load csv from example
+								🗃️ load example csv
 							</a>
 							<ul class="dropdown-menu">
 								<li v-for="e in examples">
-									<a v-html="e.id" @click="loadExample(e)" class="dropdown-item" href="#"></a>
+									<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.id"></span></a>
 								</li>
 							</ul>
 						</li>
@@ -57,7 +57,7 @@
 		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
-				Open a csv file of load example from the top menu<br/>
+				Open a csv file of load example from the top menu.<br/>
 				Why not try the file <a href="#" @click="loadExample(examples[0])">test.csv</a>?
 			</div>
 		</div>
