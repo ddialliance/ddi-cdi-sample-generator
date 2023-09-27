@@ -76,14 +76,6 @@ createApp({
                 'has' : []
             }
 
-            for(const c of columns){
-                logicalRecord['has'].push({'@id': c.id})
-            }
-
-            cdi['@graph'] = cdi['@graph'].concat(columns)
-            cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
-        
-
             var dataset = {
                 '@id' : "#dataset",
                 "@type": "DimensionalDataSet",
@@ -91,20 +83,6 @@ createApp({
             }
 
             var dimensionalKeys = []
-
-            for(const c of columns){
-                if(c.role == 'Dimension'){
-                    var id = "#dimensionalKey-"+c.id
-                    dimensionalKeys.push({
-                        '@id' : id,
-                        '@type' : 'DimensionalKey'
-                    })
-                    dataset['has'].push({'@id' : id})
-                }
-            }
-
-            cdi['@graph'] = cdi['@graph'].concat(dataset)
-            cdi['@graph'] = cdi['@graph'].concat(dimensionalKeys)
 
             var datastructure = {
                 '@id' : "#datastructure",
@@ -116,6 +94,15 @@ createApp({
             var componentPositions = []
 
             for(const c of columns){
+                logicalRecord['has'].push({'@id': c.id})
+                if(c.role == 'Dimension'){
+                    var id = "#dimensionalKey-"+c.id
+                    dimensionalKeys.push({
+                        '@id' : id,
+                        '@type' : 'DimensionalKey'
+                    })
+                    dataset['has'].push({'@id' : id})
+                }
                 if(c.role == 'Dimension'){
                     var id = "#dimensionComponent-"+c.id
                     components.push({
@@ -150,6 +137,12 @@ createApp({
                     datastructure['has'].push({'@id' : id})
                 }
             }
+
+            cdi['@graph'] = cdi['@graph'].concat(columns)
+            cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
+
+            cdi['@graph'] = cdi['@graph'].concat(dataset)
+            cdi['@graph'] = cdi['@graph'].concat(dimensionalKeys)
 
             cdi['@graph'] = cdi['@graph'].concat(datastructure)
             cdi['@graph'] = cdi['@graph'].concat(components)
