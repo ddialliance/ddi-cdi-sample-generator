@@ -112,6 +112,10 @@ createApp({
             {
                 id: 'tiny.csv',
                 raw:"id,name,value\n0,Pelle,13\n1,Claus,15"
+            },
+            {
+                id: 'spss_example.csv',
+                raw: "RID,MARST,PWT\n10000001,3,537\m10000002,1,231\n10000003,2,599\n10000004,1,4003\n10000005,2,598"
             }
         ]
         const input = reactive({

@@ -12,6 +12,16 @@
 	
 	<link rel="icon" href="resources/ddi-cdi-sample-generator.svg">
 	<script src="js/lib/utils.js"></script>
+	<style>
+		textarea{
+			font-family: monospace;
+		}
+		@media (min-width: 768px) { 
+		form .row .notFirst{
+			display:none;
+		}
+		}
+	</style>
 </head>
 
 <body>
@@ -45,16 +55,11 @@
 								</li>
 							</ul>
 						</li>
-						<li>
-							<button type="button" class="btn btn-danger" title="send json-ld to Arofan">
-								📧 Send to Arofan
-							</button>
-						</li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center" role="alert">
+		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
 				Open a csv file of load example from the top menu.<br/>
@@ -62,28 +67,28 @@
 			</div>
 		</div>
 		<div v-if="input.id != null">
-			<form>
+			<form class="mb-4">
 				<div class="row" v-for="column in columns">
 					<div class="col-md-1">
-						<label class="form-label" v-if="column.position == 0">Position</label>
+						<label class="form-label" :class="{notFirst: (column.position != 0)}">Position</label>
 						<input v-model="column.position" type="text" class="form-control" disabled>
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" v-if="column.position == 0">Label</label>
+						<label class="form-label" :class="{notFirst: (column.position != 0)}">Label</label>
 						<input v-model="column.displayLabel" type="text" class="form-control">
 					</div>
 					<div class="col-md-5">
-						<label class="form-label" v-if="column.position == 0">Description</label>
+						<label class="form-label" :class="{notFirst: (column.position != 0)}">Description</label>
 						<input v-model="column.descriptiveText" type="text" class="form-control">
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" v-if="column.position == 0">Role</label>
+						<label class="form-label" :class="{notFirst: (column.position != 0)}">Role</label>
 						<select v-model="column.role" class="form-select" aria-label="Default select example">
 							<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
 						</select>
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" v-if="column.position == 0">Type</label>
+						<label class="form-label" :class="{notFirst: (column.position != 0)}">Type</label>
 						<select v-model="column.hasIndendedDataType" class="form-select"
 							aria-label="Default select example">
 							<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
@@ -91,28 +96,30 @@
 					</div>
 				</div>
 			</form>
-			<!--	
-			<div class="upload">
-				<label id="csvFileLabel" for="csvFile">Select a CSV file</label>
-				<input type="file" id="csvFile" name="csvFile"/>	
-				<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
-				<label id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
-			</div>
-			-->
-
-			<input type="file" id="csvFile" ref="file" style="display: none;" name="csvFile" />
-
-			<div class="form-floating mb-3">
-				<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
-					placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
-					disabled></textarea>
-				<label for="ddiCdiOutput">DDI-CDI (json-ld) <a href="#" title="copy json-ld to clipboard">📋</a></label>
-			</div>
-			<div class="form-floating mb-3">
-				<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv"
-					id="importedCsv" style="height: 100px" disabled></textarea>
-				<label v-html="input.id" for="importedCsv"></label>
-			</div>
+			
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#csv" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">📄 csv</button>
+				</li>
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#cdi" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">⚗️ ddi-cdi (json-ld)</button>
+				</li>
+			  </ul>
+			  <div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="csv" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+					<div class="form-floating mb-3">
+						<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv"
+							id="importedCsv" style="height: 100px" disabled></textarea>				
+					</div>
+				</div>
+				<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+					<div class="form-floating mb-3">
+						<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
+							placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
+							disabled></textarea>
+					</div>
+				</div>
+			  </div>
 		</div>
 	</div>
 
