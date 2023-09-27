@@ -40,9 +40,9 @@
 								🗃️ load csv from example
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">test.csv</a></li>
-								<li><a class="dropdown-item" href="#">beer.csv</a></li>
-								<li><a class="dropdown-item" href="#">great-data.csv</a></li>
+								<li v-for="e in examples">
+									<a v-html="e.id" @click="loadExample(e)" class="dropdown-item" href="#"></a>
+								</li>
 							</ul>
 						</li>
 						<li>
@@ -54,7 +54,7 @@
 			</div>
 		</nav>
 		<div v-if="input.id == null">
-			open a file or load an example
+			ℹ️ open a file or load an example
 		</div>
 		<div v-if="input.id != null">
 			<form>

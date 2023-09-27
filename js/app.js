@@ -46,7 +46,7 @@ createApp({
             input.type = 'file';
             input.onchange = _ => {
                 let files =   Array.from(input.files);
-                console.log(this.input.id)
+                
                 this.input.id = files[0].name
                 var reader = new FileReader();
                 reader.readAsText(files[0],'UTF-8');
@@ -57,14 +57,18 @@ createApp({
                     console.log("read the file");
                     this.reloadCsv()
                 }
-                console.log(files);
             };
             input.click();
         },
+        loadExample(example){
+            console.log("loadExample")
+            console.log(example)
+            this.input = example
+            this.reloadCsv()
+        },
         reloadCsv(){
             if(this.input.id == null) return;
-            console.log("reloadCsv")
-            console.log(this.input)
+            
             var csv = CSVToArray(this.input.raw, this.delimiter)
             var pos = 0
             this.columns = []
@@ -210,7 +214,7 @@ createApp({
         })
 
         return {
-            input, cv, columns, cdiOutput
+            input, cv, examples, columns, cdiOutput
         }
     }
 }).mount('#app')
