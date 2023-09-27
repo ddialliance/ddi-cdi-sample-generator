@@ -39,20 +39,61 @@ Representations (SKOS:ConceptScheme for enumerated variables)
 */
 
 createApp({
+    methods:{
+        openCsv(){
+            console.log("open csv")
+            let input = document.createElement('input');
+            input.type = 'file';
+            input.onchange = _ => {
+                let files =   Array.from(input.files);
+                console.log(this.input.id)
+                this.input.id = files[0].name
+                var reader = new FileReader();
+                reader.readAsText(files[0],'UTF-8');
+
+                reader.onload = readerEvent => {
+                    var content = readerEvent.target.result;
+                    this.input.raw = content
+                    console.log("read the file");
+                    this.reloadCsv()
+                }
+                console.log(files);
+            };
+            input.click();
+        },
+        reloadCsv(){
+            if(this.input.id == null) return;
+            console.log("reloadCsv")
+            console.log(this.input)
+            var csv = CSVToArray(this.input.raw, this.delimiter)
+            var pos = 0
+            this.columns = []
+            csv[0].forEach((id) =>{
+                this.columns.push(new Col(id, pos))
+                pos++
+            })
+        }
+    },
     mounted(){
-        var csv = CSVToArray(this.input.raw, this.delimiter)
-		var pos = 0
-        csv[0].forEach((id) =>{
-			this.columns.push(new Col(id, pos))
-			pos++
-		})
+        console.log("mounted")
+        this.reloadCsv()
     },
     setup() {
         const delimiter = ','
         const lang = reactive({id:'en', label: 'English'})
+        const examples = reactive([
+            {
+                id: 'test.csv',
+                raw:"Frequency,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
+            },
+            {
+                id: 'tiny.csv',
+                raw:"AAAA,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
+            }
+        ])
         const input = reactive({
-            id: "test.csv",
-            raw:"Frequency,Year,Age Cohort,Sex,Status,Median Income (USD)\nA,2003,C,M,ACT,5500\nA,2003,G,F,ACT,7500\nA,2004,E,M,EST,10000\nA,2005,B,F,ACT,14000\nA,2004,B,M,EST,2000"
+            id: null,
+            raw:""
         })
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],

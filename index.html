@@ -29,7 +29,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<button @click="$refs.file.click()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
+							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
 						</li>
 						<li class="nav-item">
 							<button type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
@@ -53,59 +53,64 @@
 				</div>
 			</div>
 		</nav>
-
-		<form>
-			<div class="row" v-for="column in columns">
-				<div class="col-md-1">
-					<label class="form-label" v-if="column.position == 0">Position</label>
-					<input v-model="column.position" type="text" class="form-control" disabled>
+		<div v-if="input.id == null">
+			open a file or load an example
+		</div>
+		<div v-if="input.id != null">
+			<form>
+				<div class="row" v-for="column in columns">
+					<div class="col-md-1">
+						<label class="form-label" v-if="column.position == 0">Position</label>
+						<input v-model="column.position" type="text" class="form-control" disabled>
+					</div>
+					<div class="col-md-2">
+						<label class="form-label" v-if="column.position == 0">Label</label>
+						<input v-model="column.displayLabel" type="text" class="form-control">
+					</div>
+					<div class="col-md-5">
+						<label class="form-label" v-if="column.position == 0">Description</label>
+						<input v-model="column.descriptiveText" type="text" class="form-control">
+					</div>
+					<div class="col-md-2">
+						<label class="form-label" v-if="column.position == 0">Role</label>
+						<select v-model="column.role" class="form-select" aria-label="Default select example">
+							<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<label class="form-label" v-if="column.position == 0">Type</label>
+						<select v-model="column.hasIndendedDataType" class="form-select"
+							aria-label="Default select example">
+							<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
+						</select>
+					</div>
 				</div>
-				<div class="col-md-2">
-					<label class="form-label" v-if="column.position == 0">Label</label>
-					<input v-model="column.displayLabel" type="text" class="form-control">
-				</div>
-				<div class="col-md-5">
-					<label class="form-label" v-if="column.position == 0">Description</label>
-					<input v-model="column.descriptiveText" type="text" class="form-control">
-				</div>
-				<div class="col-md-2">
-					<label class="form-label" v-if="column.position == 0">Role</label>
-					<select v-model="column.role" class="form-select" aria-label="Default select example">
-						<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
-					</select>
-				</div>
-				<div class="col-md-2">
-					<label class="form-label" v-if="column.position == 0">Type</label>
-					<select v-model="column.hasIndendedDataType" class="form-select"
-						aria-label="Default select example">
-						<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
-					</select>
-				</div>
+			</form>
+			<!--	
+			<div class="upload">
+				<label id="csvFileLabel" for="csvFile">Select a CSV file</label>
+				<input type="file" id="csvFile" name="csvFile"/>	
+				<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
+				<label id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
 			</div>
-		</form>
-		<!--	
-		<div class="upload">
-			<label id="csvFileLabel" for="csvFile">Select a CSV file</label>
-			<input type="file" id="csvFile" name="csvFile"/>	
-			<input type="checkbox" id="headerRowIncl" name="headerRowIncl"/>
-			<label id="headerRowInclLabel" for="headerRowIncl">header row incl.</label>
-		</div>
-		-->
+			-->
 
-		<input type="file" id="csvFile" ref="file" style="display: none;" name="csvFile" />
+			<input type="file" id="csvFile" ref="file" style="display: none;" name="csvFile" />
 
-		<div class="form-floating mb-3">
-			<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
-				placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
-				disabled></textarea>
-			<label for="ddiCdiOutput">DDI-CDI (json-ld) <a href="#" title="copy json-ld to clipboard">📋</a></label>
-		</div>
-		<div class="form-floating mb-3">
-			<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv"
-				id="importedCsv" style="height: 100px" disabled></textarea>
-			<label v-html="input.id" for="importedCsv"></label>
+			<div class="form-floating mb-3">
+				<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
+					placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
+					disabled></textarea>
+				<label for="ddiCdiOutput">DDI-CDI (json-ld) <a href="#" title="copy json-ld to clipboard">📋</a></label>
+			</div>
+			<div class="form-floating mb-3">
+				<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv"
+					id="importedCsv" style="height: 100px" disabled></textarea>
+				<label v-html="input.id" for="importedCsv"></label>
+			</div>
 		</div>
 	</div>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	<script src="js/app.js"></script>
 </body>
