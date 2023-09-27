@@ -28,7 +28,8 @@ class Col{
         return variable
     }
 }
-/* TODO: add dimensional stuff 
+/* 
+TODO: add dimensional stuff 
 DimensionalDataStructure [has] DataStructureComponent (DimensionComponent, AttributeComponet, MeasureComponent)
 DimensionComponent
 AttributeComponent
@@ -41,42 +42,41 @@ Representations (SKOS:ConceptScheme for enumerated variables)
 createApp({
     methods:{
         openCsv(){
-            console.log("open csv")
-            let input = document.createElement('input');
-            input.type = 'file';
+            let input = document.createElement('input')
+            input.type = 'file'
+            input.accept = '.csv'
             input.onchange = _ => {
-                let files =   Array.from(input.files);
+                let files = Array.from(input.files);
                 
                 this.input.id = files[0].name
-                var reader = new FileReader();
-                reader.readAsText(files[0],'UTF-8');
+                var reader = new FileReader()
+                reader.readAsText(files[0], 'UTF-8')
 
                 reader.onload = readerEvent => {
-                    var content = readerEvent.target.result;
+                    var content = readerEvent.target.result
                     this.input.raw = content
-                    console.log("read the file");
                     this.reloadCsv()
                 }
             };
             input.click();
         },
         saveCdi(){
-            var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' });
-            //TODO: generate smart filename
-            var fileNameToSaveAs = this.input.id.replace('.csv', '.jsonld'); //filename.extension
+            var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' })
+            
+            var fileNameToSaveAs = this.input.id.replace('.csv', '.jsonld')
           
-            var downloadLink = document.createElement("a");
-            downloadLink.download = fileNameToSaveAs;
-            downloadLink.innerHTML = "Download File";
+            var downloadLink = document.createElement("a")
+            downloadLink.download = fileNameToSaveAs
+            downloadLink.innerHTML = "Download File"
             if (window.webkitURL != null) {
               // Chrome allows the link to be clicked without actually adding it to the DOM.
-              downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+              downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob)
             } else {
               // Firefox requires the link to be added to the DOM before it can be clicked.
-              downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-              downloadLink.onclick = destroyClickedElement;
-              downloadLink.style.display = "none";
-              document.body.appendChild(downloadLink);
+              downloadLink.href = window.URL.createObjectURL(textFileAsBlob)
+              downloadLink.onclick = destroyClickedElement
+              downloadLink.style.display = "none"
+              document.body.appendChild(downloadLink)
             }
           
             downloadLink.click();
@@ -99,7 +99,6 @@ createApp({
         }
     },
     mounted(){
-        console.log("mounted")
         this.reloadCsv()
     },
     setup() {
