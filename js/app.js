@@ -6,16 +6,18 @@ class Col{
     descriptiveText
     hasIndendedDataType
     role
+	position
     values = []
-    constructor(id){
+    constructor(id, position){
+		this.position = position
         if(isNaN(id)){
             this.displayLabel = id
         }
-        this.id = '#' + id.replace(/\W/g,'_')
+        this.id = id.replace(/\W/g,'_')
     }
     toJSON(){
         var variable = {
-            '@id': this.id,
+            '@id': '#' + this.id,
             '@type': 'InstanceVariable',
             displayLabel: this.displayLabel,
             descriptiveText: this.descriptiveText
@@ -39,7 +41,11 @@ Representations (SKOS:ConceptScheme for enumerated variables)
 createApp({
     mounted(){
         var csv = CSVToArray(this.input.raw, this.delimiter)
-        csv[0].forEach((id) =>{this.columns.push(new Col(id))})
+		var pos = 0
+        csv[0].forEach((id) =>{
+			this.columns.push(new Col(id, pos))
+			pos++
+		})
     },
     setup() {
         const delimiter = ','
@@ -99,6 +105,55 @@ createApp({
 
             cdi['@graph'] = cdi['@graph'].concat(dataset)
             cdi['@graph'] = cdi['@graph'].concat(dimensionalKeys)
+
+            var datastructure = {
+                '@id' : "#datastructure",
+                "@type": "DimensionalDataStructure",
+                'has' : []
+            }
+
+            var components = []
+            var componentPositions = []
+
+            for(const c of columns){
+                if(c.role == 'Dimension'){
+                    var id = "#dimensionComponent-"+c.id
+                    components.push({
+                        '@id' : id,
+                        '@type' : 'DimensionComponent',
+						'isDefinedBy' : '#' + c.id
+                    })
+                    componentPositions.push({
+                        '@id' : '#componentPosition-' + c.id,
+                        '@type' : 'ComponentPosition',
+						'value' : c.position
+                    })
+                    datastructure['has'].push({'@id' : id})
+                    datastructure['has'].push({'@id' : '#componentPosition-' + c.id})
+                }
+                if(c.role == 'Attribute'){
+                    var id = "#attributeComponent-"+c.id
+                    components.push({
+                        '@id' : id,
+                        '@type' : 'AttributeComponent',
+						'isDefinedBy' : '#' + c.id
+                    })
+                    datastructure['has'].push({'@id' : id})
+                }
+                if(c.role == 'Measure'){
+                    var id = "#measureComponent-"+c.id
+                    components.push({
+                        '@id' : id,
+                        '@type' : 'MeasureComponent',
+						'isDefinedBy' : '#' + c.id
+                    })
+                    datastructure['has'].push({'@id' : id})
+                }
+            }
+
+            cdi['@graph'] = cdi['@graph'].concat(datastructure)
+            cdi['@graph'] = cdi['@graph'].concat(components)
+            cdi['@graph'] = cdi['@graph'].concat(componentPositions)
 
             return JSON.stringify(cdi, null, 2)
         })
