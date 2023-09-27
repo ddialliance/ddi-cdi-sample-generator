@@ -70,15 +70,30 @@ createApp({
                 '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
                 '@graph':[]
             }
+			var dataStore= {
+				'@id' : '#dataStore'
+				'@type' : 'DataStore'
+				'recordCount' : 'XXXXXXXX'
+			}
+			dataStore['has'].push({'@id' : '#logicalRecord'})
+			
+            var physicalDataset = {
+                '@id' : "#physicalDataset",
+                '@type': "PhysicalDataset",
+				'formats' : '#dataStore'
+				'physicalFileName' : input.id
+                'has' : []
+            }
+
             var logicalRecord = {
                 '@id' : "#logicalRecord",
-                "@type": "LogicalRecord",
+                '@type': "LogicalRecord",
                 'has' : []
             }
 
             var dataset = {
                 '@id' : "#dataset",
-                "@type": "DimensionalDataSet",
+                '@type': "DimensionalDataSet",
                 'has' : []
             }
 
@@ -86,7 +101,7 @@ createApp({
 
             var datastructure = {
                 '@id' : "#datastructure",
-                "@type": "DimensionalDataStructure",
+                '@type': "DimensionalDataStructure",
                 'has' : []
             }
 
@@ -138,6 +153,9 @@ createApp({
 
             cdi['@graph'] = cdi['@graph'].concat(columns)
             cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
+
+            cdi['@graph'] = cdi['@graph'].concat(physicalDataset)
+            cdi['@graph'] = cdi['@graph'].concat(dataStore)
 
             cdi['@graph'] = cdi['@graph'].concat(dataset)
             cdi['@graph'] = cdi['@graph'].concat(dimensionalKeys)
