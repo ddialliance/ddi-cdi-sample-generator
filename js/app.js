@@ -7,9 +7,16 @@ class Col{
     hasIndendedDataType
     role
 	position
+    coded = false
+    codeList = []
     values = []
-    constructor(id, position){
+    constructor(id, position, values){
 		this.position = position
+        this.values = values
+        var type = guessType(values)
+        if(type){
+            this.hasIndendedDataType = type
+        }
         if(isNaN(id)){
             this.name = id
         }
@@ -23,10 +30,17 @@ class Col{
             displayLabel: this.displayLabel
         }
         if(this.hasIndendedDataType){
-            variable.hasIndendedDataType = {'@id': this.hasIndendedDataType}
+            variable.hasIndendedDataType = {'@id' : this.hasIndendedDataType}
         }
         return variable
     }
+    getUniqueValues(){
+        return [... new Set(this.values)]
+    }
+}
+
+class Concept{
+
 }
 /* 
 TODO: add dimensional stuff 
@@ -96,7 +110,8 @@ createApp({
             this.columns.splice(0)
             var pos = 0
             for(const id of csv[0]){
-                this.columns.push(new Col(id, pos))
+                var values = getColumnValues(csv, pos, this.firstRowIsHeader)
+                this.columns.push(new Col(id, pos, values))
                 pos++
             }
         }
@@ -106,6 +121,7 @@ createApp({
     },
     setup() {
         const delimiter = ','
+        const firstRowIsHeader = ref(true)
         const lang = reactive({id:'en', label: 'English'})
         const examples = [
             {
@@ -114,7 +130,7 @@ createApp({
             },
             {
                 id: 'tiny.csv',
-                raw:"id,name,value\n0,Pelle,13\n1,Claus,15"
+                raw:"id,name,value,some date\n0,Pelle,13,2010-01-12\n1,Claus,15,2020-10-10"
             },
             {
                 id: 'spss_example.csv',
@@ -132,19 +148,26 @@ createApp({
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
             colTypes : [
-                {label:'Coded', id: "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, 
+                {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"},
                 {label:'Integer', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Integer"}, 
-                {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}, 
-                {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"}
+                {label:'Date', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Date"},
+                {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}
             ]
         }
         const columns = reactive([])
         const recordCount = ref(0)
+        const haveCodeLists = computed(() =>{
+            return columns.filter(c => c.coded).length > 0
+        })
 
         const cdiOutput = computed(() => {
             var cdi = {
                 '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
                 '@graph':[]
+            }
+
+            if(columns.filter(c => c.coded).length > 0){
+                cdi['@context'] = [cdi['@context'], {"skos": "http://www.w3.org/2004/02/skos/core#"}]
             }
 			var dataStore= {
 				'@id' : '#dataStore',
@@ -273,7 +296,7 @@ createApp({
         })
 
         return {
-            input, recordCount, cv, examples, columns, cdiOutput
+            input, firstRowIsHeader, recordCount, haveCodeLists, cv, examples, columns, cdiOutput
         }
     }
 }).mount('#app')

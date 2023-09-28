@@ -1,5 +1,3 @@
-
-
 function CSVToArray(strData, strDelimiter){
     // Check to see if the delimiter is defined. If not,
     // then default to comma.
@@ -82,12 +80,28 @@ function CSVToArray(strData, strDelimiter){
     return( arrData );
 }
 
+function getColumnValues(csv, columnIndex, haveHeader){
+    var startRow = 0
+    if(haveHeader) startRow = 1;
+
+    var column = [];
+    for(var i=startRow; i<csv.length; i++){
+       column.push(csv[i][columnIndex]);
+    }
+    return column;
+}
+
 function guessType(values){
     const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
-    // TODO:  guess for "DateTime"
-    if(values.every(Number.isInteger)) return base + 'Integer';
-    if(values.every(i => typeof i === "string")) return  base +'String';
+    
+    var intReg = /^\d+$/;
+    var dateReg = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    
+    if(values.every(i => intReg.test(i))) return base + 'Integer';
 
-    // TODO: guess for a codelist (check for repeated values) "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme";
+    // TODO: work out a better date test
+    if(values.every(i => dateReg.test(i))) return base + 'Date';
+
+    if(values.every(i => typeof i === "string")) return  base +'String';
     return null;
 }
