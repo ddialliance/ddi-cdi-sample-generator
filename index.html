@@ -44,17 +44,6 @@
 						<li class="nav-item">
 							<button @click="saveCdi()" :disabled="input.id == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
 						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-								aria-expanded="false">
-								🗃️ load example csv
-							</a>
-							<ul class="dropdown-menu">
-								<li v-for="e in examples">
-									<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.id"></span></a>
-								</li>
-							</ul>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -63,7 +52,12 @@
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
 				Open a csv file of load example from the top menu.<br/>
-				Why not try the file <a href="#" @click="loadExample(examples[0])">test.csv</a>?
+				<br />
+				<strong>🗃️ load example csv</strong>
+				
+				<span v-for="e in examples">
+					<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.id"></span></a>
+				</span>
 			</div>
 		</div>
 		<div v-if="input.id != null">

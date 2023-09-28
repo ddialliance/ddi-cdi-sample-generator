@@ -1,5 +1,10 @@
 # DDI-CDI Sample generator
 
-Simple javascript application to generate DDI-CDI (json-ld) from simple dataset files.
+Simple javascript application to do basic variable documentation for csv-files.
+
+This application is for demonstration and testing purposes only.
+Its not inteded to be used to create metadata for your datasets.
+
+
 
 
