@@ -51,9 +51,9 @@
 		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
-				Open a csv file of load example from the top menu.<br/>
+				Open a csv data file of load one of the examples.<br/>
 				<br />
-				<strong>🗃️ load example csv</strong>
+				<strong>🗃️ example csv:s</strong>
 				
 				<span v-for="e in examples">
 					<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.id"></span></a>
