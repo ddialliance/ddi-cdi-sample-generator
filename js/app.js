@@ -121,7 +121,7 @@ createApp({
             },
             {
                 id: 'tiny.csv',
-                raw:"id,name,value\n0,Pelle,13\n1,Claus,15"
+                raw:"id,name,value,some date\n0,Pelle,13,2010-01-12\n1,Claus,15,2020-10-10"
             },
             {
                 id: 'spss_example.csv',
@@ -139,10 +139,11 @@ createApp({
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
             colTypes : [
-                {label:'Coded', id: "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, 
+                {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"},
+                /*{label:'Coded', id: "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, */
                 {label:'Integer', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Integer"}, 
-                {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}, 
-                {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"}
+                {label:'Date', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Date"},
+                {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}
             ]
         }
         const columns = reactive([])

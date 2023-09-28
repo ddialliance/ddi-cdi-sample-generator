@@ -95,12 +95,12 @@ function guessType(values){
     const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
     
     var intReg = /^\d+$/;
-    var dateTimeReg = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/
+    var dateReg = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
     
     if(values.every(i => intReg.test(i))) return base + 'Integer';
 
-    // TODO: check if this test works for "DateTime"
-    if(values.every(i => dateTimeReg.test(i))) return base + 'DateTime';
+    // TODO: work out a better date test
+    if(values.every(i => dateReg.test(i))) return base + 'Date';
 
     if(values.every(i => typeof i === "string")) return  base +'String';
     return null;
