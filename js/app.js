@@ -2,8 +2,8 @@ const { createApp, ref, reactive, computed, Utils } = Vue
 
 class Col{
     id
+    name
     displayLabel
-    descriptiveText
     hasIndendedDataType
     role
 	position
@@ -11,7 +11,7 @@ class Col{
     constructor(id, position){
 		this.position = position
         if(isNaN(id)){
-            this.displayLabel = id
+            this.name = id
         }
         this.id = id.replace(/\W/g,'_')
     }
@@ -19,8 +19,8 @@ class Col{
         var variable = {
             '@id': '#' + this.id,
             '@type': 'InstanceVariable',
-            displayLabel: this.displayLabel,
-            descriptiveText: this.descriptiveText
+            name: this.name,
+            displayLabel: this.displayLabel
         }
         if(this.hasIndendedDataType){
             variable.hasIndendedDataType = {'@id': this.hasIndendedDataType}
