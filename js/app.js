@@ -161,6 +161,24 @@ createApp({
 				'physicalFileName' : input.id,
                 'has' : []
             }
+			
+            var physicalSegmentLayout = {
+                '@id' : "#physicalSegmentLayout",
+                '@type': "PhysicalSegmentLayout",
+				'formats' : '#logicalRecord',
+				'isDelimited' : 'true',
+				'delimiter' : delimiter,
+                'has' : []
+            }
+
+            var physicalRecordSegment = {
+                '@id' : "#physicalRecordSegment",
+                '@type': "PhysicalRecordSegment",
+				'mapsTo' : '#logicalRecord',
+                'has' : []
+            }
+			physicalRecordSegment['has'].push({'@id' : '#physicalSegmentLayout'})
+			physicalRecordSegment['has'].push({'@id' : '#physicalDataset'})
 
             var logicalRecord = {
                 '@id' : "#logicalRecord",
@@ -231,6 +249,8 @@ createApp({
             cdi['@graph'] = cdi['@graph'].concat(columns)
             cdi['@graph'] = cdi['@graph'].concat(logicalRecord)
 
+            cdi['@graph'] = cdi['@graph'].concat(physicalSegmentLayout)
+			cdi['@graph'] = cdi['@graph'].concat(physicalRecordSegment)
             cdi['@graph'] = cdi['@graph'].concat(physicalDataset)
             cdi['@graph'] = cdi['@graph'].concat(dataStore)
 
