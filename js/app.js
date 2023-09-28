@@ -201,10 +201,17 @@ createApp({
             }
 
             var components = []
+            var valueMappings = []
             var componentPositions = []
 
             for(const c of columns){
                 logicalRecord['has'].push({'@id': c.id})
+                valueMappings.push({
+                    '@id' : '#valueMapping' + c.id,
+                    '@type' : 'ValueMapping',
+					'has' : [{'@id' : '#' + c.id}]
+                })
+                physicalSegmentLayout['has'].push({'@id' : '#valueMapping' + c.id})
                 if(c.role == 'Dimension'){
                     var id = "#dimensionalKey-"+c.id
                     dimensionalKeys.push({
@@ -251,6 +258,7 @@ createApp({
 
             cdi['@graph'] = cdi['@graph'].concat(physicalSegmentLayout)
 			cdi['@graph'] = cdi['@graph'].concat(physicalRecordSegment)
+			cdi['@graph'] = cdi['@graph'].concat(valueMappings)
             cdi['@graph'] = cdi['@graph'].concat(physicalDataset)
             cdi['@graph'] = cdi['@graph'].concat(dataStore)
 
