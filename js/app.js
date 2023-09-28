@@ -83,16 +83,6 @@ class Concept{
         }
     }
 }
-/* 
-TODO: add dimensional stuff 
-DimensionalDataStructure [has] DataStructureComponent (DimensionComponent, AttributeComponet, MeasureComponent)
-DimensionComponent
-AttributeComponent
-MeasureComponent
-ComponentPosition
-RepresentedVariable (or use InstanceVariable to represent this)
-Representations (SKOS:ConceptScheme for enumerated variables)
-*/
 
 createApp({
     methods:{
