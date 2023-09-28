@@ -7,6 +7,8 @@ class Col{
     hasIndendedDataType
     role
 	position
+    coded = false
+    codeList = []
     values = []
     constructor(id, position, values){
 		this.position = position
@@ -28,9 +30,12 @@ class Col{
             displayLabel: this.displayLabel
         }
         if(this.hasIndendedDataType){
-            variable.hasIndendedDataType = {'@id': this.hasIndendedDataType}
+            variable.hasIndendedDataType = {'@id' : this.hasIndendedDataType}
         }
         return variable
+    }
+    getUniqueValues(){
+        return [... new Set(this.values)]
     }
 }
 /* 
@@ -140,7 +145,6 @@ createApp({
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
             colTypes : [
                 {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"},
-                /*{label:'Coded', id: "https://www.w3.org/2009/08/skos-reference/skos.html#ConceptScheme"}, */
                 {label:'Integer', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Integer"}, 
                 {label:'Date', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Date"},
                 {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}
@@ -148,6 +152,12 @@ createApp({
         }
         const columns = reactive([])
         const recordCount = ref(0)
+        const haveCodeLists = computed(() =>{
+            for(const c of columns){
+                if(c.coded) return true
+            }
+            return false
+        })
 
         const cdiOutput = computed(() => {
             var cdi = {
@@ -273,7 +283,7 @@ createApp({
         })
 
         return {
-            input, firstRowIsHeader, recordCount, cv, examples, columns, cdiOutput
+            input, firstRowIsHeader, recordCount, haveCodeLists, cv, examples, columns, cdiOutput
         }
     }
 }).mount('#app')
