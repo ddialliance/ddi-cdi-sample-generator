@@ -38,6 +38,10 @@ class Col{
         return [... new Set(this.values)]
     }
 }
+
+class Concept{
+
+}
 /* 
 TODO: add dimensional stuff 
 DimensionalDataStructure [has] DataStructureComponent (DimensionComponent, AttributeComponet, MeasureComponent)
@@ -163,6 +167,14 @@ createApp({
             var cdi = {
                 '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
                 '@graph':[]
+            }
+            var useSkos = false
+            for(const c of columns){
+                if(c.coded) useSkos = true
+            }
+
+            if(useSkos){
+                cdi['@context'] = [cdi['@context'], {"skos": "http://www.w3.org/2004/02/skos/core#"}]
             }
 			var dataStore= {
 				'@id' : '#dataStore',
