@@ -99,7 +99,7 @@
 					<div class="col-md-1">
 						<label class="form-label" :class="{notFirst: (column.position != 0)}">Code</label>
 						<div class="form-check checkbox-xl">
-							<input v-model="column.coded" class="form-check-input" type="checkbox" id="flexCheckChecked">
+							<input v-model="column.coded" @change="column.createCodeList()" class="form-check-input" type="checkbox" id="flexCheckChecked">
 						</div>
 					</div>
 				</div>
@@ -116,13 +116,13 @@
 			  <div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade" id="csv" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 					<div class="form-floating mb-3">
-						<textarea v-html="input.raw" rows="10" style="height:100%;" class="form-control" placeholder="Imported csv"
+						<textarea v-html="input.raw" rows="20" style="height:100%;" class="form-control" placeholder="Imported csv"
 							id="importedCsv" style="height: 100px" disabled></textarea>				
 					</div>
 				</div>
 				<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 					<div class="form-floating mb-3">
-						<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
+						<textarea v-html="cdiOutput" rows="20" style="height:100%;" class="form-control"
 							placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
 							disabled></textarea>
 					</div>

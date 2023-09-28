@@ -34,13 +34,54 @@ class Col{
         }
         return variable
     }
+    getConceptScheme(){
+        var conceptScheme = {
+            '@id': '#conceptScheme-'+this.id,
+            '@type': "skos:ConceptScheme",
+            'skos:hasTopConcept':[]
+        }
+        for(const v of this.getUniqueValues()){
+            conceptScheme['skos:hasTopConcept'].push({'@id':'#'+this.id + '-concept-' + v})
+        }
+        return conceptScheme
+    }
     getUniqueValues(){
         return [... new Set(this.values)]
+    }
+    createCodeList(){
+        if(!this.coded){
+            this.codeList = []
+            return
+        }
+        for(const v of this.getUniqueValues()){
+            var conceptId = this.id + '-concept-' + v
+            this.codeList.push(new Concept(conceptId, v, '#conceptScheme-'+this.id))
+        }
     }
 }
 
 class Concept{
-
+    id
+    prefLabel
+    notation
+    definition
+    inScheme
+    constructor(id, prefLabel, inScheme){
+        this.id = id
+        this.prefLabel = prefLabel
+        this.notation = prefLabel
+        this.inScheme = inScheme
+    }
+    toJSON(){
+        return {
+            '@id': '#' + this.id,
+            '@type': 'skos:Concept',
+            notation: this.notation,
+            prefLabel: this.prefLabel,
+            definition: this.definition,
+            inScheme:{'@id': this.inScheme}
+        }
+    }
 }
 /* 
 TODO: add dimensional stuff 
@@ -273,6 +314,11 @@ createApp({
 						'isDefinedBy' : '#' + c.id
                     })
                     datastructure['has'].push({'@id' : id})
+                }
+                //TODO: create concept scheme, connect it to the variable
+                if(c.coded){
+                    cdi['@graph'] = cdi['@graph'].concat(c.getConceptScheme())
+                    cdi['@graph'] = cdi['@graph'].concat(c.codeList)
                 }
             }
 
