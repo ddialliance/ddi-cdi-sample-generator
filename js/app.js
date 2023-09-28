@@ -157,10 +157,7 @@ createApp({
         const columns = reactive([])
         const recordCount = ref(0)
         const haveCodeLists = computed(() =>{
-            for(const c of columns){
-                if(c.coded) return true
-            }
-            return false
+            return columns.filter(c => c.coded).length > 0
         })
 
         const cdiOutput = computed(() => {
@@ -168,12 +165,8 @@ createApp({
                 '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
                 '@graph':[]
             }
-            var useSkos = false
-            for(const c of columns){
-                if(c.coded) useSkos = true
-            }
 
-            if(useSkos){
+            if(columns.filter(c => c.coded).length > 0){
                 cdi['@context'] = [cdi['@context'], {"skos": "http://www.w3.org/2004/02/skos/core#"}]
             }
 			var dataStore= {
