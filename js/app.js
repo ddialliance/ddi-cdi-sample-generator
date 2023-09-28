@@ -4,7 +4,7 @@ class Col{
     id
     name
     displayLabel
-    hasIndendedDataType
+    hasIntendedDataType
     role
 	position
     coded = false
@@ -15,7 +15,7 @@ class Col{
         this.values = values
         var type = guessType(values)
         if(type){
-            this.hasIndendedDataType = type
+            this.hasIntendedDataType = type
         }
         if(isNaN(id)){
             this.name = id
@@ -29,8 +29,8 @@ class Col{
             name: this.name,
             displayLabel: this.displayLabel
         }
-        if(this.hasIndendedDataType){
-            variable.hasIndendedDataType = {'@id' : this.hasIndendedDataType}
+        if(this.hasIntendedDataType){
+            variable.hasIntendedDataType = {'@id' : this.hasIntendedDataType}
         }
         return variable
     }
