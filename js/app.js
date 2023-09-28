@@ -8,8 +8,13 @@ class Col{
     role
 	position
     values = []
-    constructor(id, position){
+    constructor(id, position, values){
 		this.position = position
+        this.values = values
+        var type = guessType(values)
+        if(type){
+            this.hasIndendedDataType = type
+        }
         if(isNaN(id)){
             this.name = id
         }
@@ -96,7 +101,8 @@ createApp({
             this.columns.splice(0)
             var pos = 0
             for(const id of csv[0]){
-                this.columns.push(new Col(id, pos))
+                var values = getColumnValues(csv, pos, this.firstRowIsHeader)
+                this.columns.push(new Col(id, pos, values))
                 pos++
             }
         }
@@ -106,6 +112,7 @@ createApp({
     },
     setup() {
         const delimiter = ','
+        const firstRowIsHeader = ref(true)
         const lang = reactive({id:'en', label: 'English'})
         const examples = [
             {
@@ -265,7 +272,7 @@ createApp({
         })
 
         return {
-            input, recordCount, cv, examples, columns, cdiOutput
+            input, firstRowIsHeader, recordCount, cv, examples, columns, cdiOutput
         }
     }
 }).mount('#app')
