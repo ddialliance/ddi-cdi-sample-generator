@@ -53,6 +53,9 @@
 						<li class="nav-item">
 							<button @click="saveCdi()" :disabled="input.fileName == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#aboutModal" title="about this app">ℹ️</button>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -71,6 +74,40 @@
 				</span>
 			</div>
 		</div>
+		<!-- About Modal -->
+		<div class="modal modal-dialog-scrollable fade" id="aboutModal" tabindex="-2" aria-labelledby="aboutModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="aboutModallLabel">ℹ️ About ddi-cdi spample generator</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<img src="resources/ddi-cdi-sample-generator.svg" class="mx-auto d-block" alt="DDI-CDI sample generator" height="64">
+						<p>
+							This webbapp is for demonstration purposes only and is inded to show 
+							implementers how to use ddi-cdi by an interactive example with documentation of
+							csv-files on a variable level.
+						</p>
+						<p>
+							Dont use this tool to ducment your data.
+						</p>
+						<h5>Created by</h5>
+						<p>
+							<ul>
+								<li>Olof Olsson, SND</li>
+								<li>Oliver Hopt, GESIS</li>
+							</ul>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#aboutModal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 
 		<!-- Instance Variable list -->
 		<div v-if="input.fileName != null">
@@ -139,6 +176,7 @@
 					</div>
 				</div>
 			</div>
+
 
 			<!-- output in tabs -->
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
