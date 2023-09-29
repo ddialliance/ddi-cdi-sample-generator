@@ -1,89 +1,5 @@
 const { createApp, ref, reactive, computed, Utils } = Vue
 
-class Column{
-    id
-    name
-    displayLabel
-    hasIntendedDataType
-    role
-	position
-    coded = false
-    codeList = []
-    values = []
-    constructor(id, position, values){
-		this.position = position
-        this.values = values
-        var type = guessType(values)
-        if(type){
-            this.hasIntendedDataType = type
-        }
-        if(isNaN(id)){
-            this.name = id
-        }
-        this.id = id.replace(/\W/g,'_')
-    }
-    toJSON(){
-        var variable = {
-            '@id' : '#' + this.id,
-            '@type' : 'InstanceVariable',
-            'name' : this.name,
-            'displayLabel' : this.displayLabel
-        }
-        if(this.hasIntendedDataType){
-            variable.hasIntendedDataType = {'@id' : this.hasIntendedDataType}
-        }
-        return variable
-    }
-    getConceptScheme(){
-        var conceptScheme = {
-            '@id' : '#conceptScheme-'+this.id,
-            '@type' : "skos:ConceptScheme",
-            'skos:hasTopConcept' : []
-        }
-        for(const v of this.getUniqueValues()){
-            conceptScheme['skos:hasTopConcept'].push({'@id':'#'+this.id + '-concept-' + v})
-        }
-        return conceptScheme
-    }
-    getUniqueValues(){
-        return [... new Set(this.values)]
-    }
-    createCodeList(){
-        if(!this.coded){
-            this.codeList = []
-            return
-        }
-        for(const v of this.getUniqueValues()){
-            var conceptId = this.id + '-concept-' + v
-            this.codeList.push(new Code(conceptId, v, '#conceptScheme-'+this.id))
-        }
-    }
-}
-
-class Code{
-    id
-    prefLabel
-    notation
-    definition
-    inScheme
-    constructor(id, prefLabel, inScheme){
-        this.id = id
-        this.prefLabel = prefLabel
-        this.notation = prefLabel
-        this.inScheme = inScheme
-    }
-    toJSON(){
-        return {
-            '@id' : '#' + this.id,
-            '@type' : 'skos:Concept',
-            'notation' : this.notation,
-            'prefLabel' : this.prefLabel,
-            'definition' : this.definition,
-            'inScheme' :{'@id': this.inScheme}
-        }
-    }
-}
-
 createApp({
     methods:{
         openCsv(){
@@ -91,13 +7,12 @@ createApp({
             inputElement.type = 'file'
             inputElement.accept = '.csv'
             inputElement.onchange = _ => {
-                let files = Array.from(inputElement.files);
-                console.log(files[0])
-                this.input.fileName = files[0].name
-                this.input.type = files[0].type
-                this.input.size = files[0].size
+                let file = Array.from(inputElement.files)[0];
+                this.input.fileName = file.name
+                this.input.type = file.type
+                this.input.size = file.size
                 var reader = new FileReader()
-                reader.readAsText(files[0], 'UTF-8')
+                reader.readAsText(file, 'UTF-8')
 
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result
@@ -109,24 +24,8 @@ createApp({
         },
         saveCdi(){
             var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' })
-            
             var fileNameToSaveAs = this.input.fileName.replace('.csv', '.jsonld')
-          
-            var downloadLink = document.createElement("a")
-            downloadLink.download = fileNameToSaveAs
-            downloadLink.innerHTML = "Download File"
-            if (window.webkitURL != null) {
-              // Chrome allows the link to be clicked without actually adding it to the DOM.
-              downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob)
-            } else {
-              // Firefox requires the link to be added to the DOM before it can be clicked.
-              downloadLink.href = window.URL.createObjectURL(textFileAsBlob)
-              downloadLink.onclick = destroyClickedElement
-              downloadLink.style.display = "none"
-              document.body.appendChild(downloadLink)
-            }
-          
-            downloadLink.click();
+            saveFile(fileNameToSaveAs, textFileAsBlob)
         },
         loadExample(example){
             this.input.raw = example.raw

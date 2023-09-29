@@ -1,3 +1,106 @@
+class Column{
+    id
+    name
+    displayLabel
+    hasIntendedDataType
+    role
+	position
+    coded = false
+    codeList = []
+    values = []
+    constructor(id, position, values){
+		this.position = position
+        this.values = values
+        var type = guessType(values)
+        if(type){
+            this.hasIntendedDataType = type
+        }
+        if(isNaN(id)){
+            this.name = id
+        }
+        this.id = id.replace(/\W/g,'_')
+    }
+    toJSON(){
+        var variable = {
+            '@id' : '#' + this.id,
+            '@type' : 'InstanceVariable',
+            'name' : this.name,
+            'displayLabel' : this.displayLabel
+        }
+        if(this.hasIntendedDataType){
+            variable.hasIntendedDataType = {'@id' : this.hasIntendedDataType}
+        }
+        return variable
+    }
+    getConceptScheme(){
+        var conceptScheme = {
+            '@id' : '#conceptScheme-'+this.id,
+            '@type' : "skos:ConceptScheme",
+            'skos:hasTopConcept' : []
+        }
+        for(const v of this.getUniqueValues()){
+            conceptScheme['skos:hasTopConcept'].push({'@id':'#'+this.id + '-concept-' + v})
+        }
+        return conceptScheme
+    }
+    getUniqueValues(){
+        return [... new Set(this.values)]
+    }
+    createCodeList(){
+        if(!this.coded){
+            this.codeList = []
+            return
+        }
+        for(const v of this.getUniqueValues()){
+            var conceptId = this.id + '-concept-' + v
+            this.codeList.push(new Code(conceptId, v, '#conceptScheme-'+this.id))
+        }
+    }
+}
+
+class Code{
+    id
+    prefLabel
+    notation
+    definition
+    inScheme
+    constructor(id, prefLabel, inScheme){
+        this.id = id
+        this.prefLabel = prefLabel
+        this.notation = prefLabel
+        this.inScheme = inScheme
+    }
+    toJSON(){
+        return {
+            '@id' : '#' + this.id,
+            '@type' : 'skos:Concept',
+            'notation' : this.notation,
+            'prefLabel' : this.prefLabel,
+            'definition' : this.definition,
+            'inScheme' :{'@id': this.inScheme}
+        }
+    }
+}
+
+function saveFile(fileName, content){
+  
+    var downloadLink = document.createElement("a")
+    downloadLink.download = fileName
+    downloadLink.innerHTML = "Download File"
+    if (window.webkitURL != null) {
+      // Chrome allows the link to be clicked without actually adding it to the DOM.
+      downloadLink.href = window.webkitURL.createObjectURL(content)
+    } else {
+      // Firefox requires the link to be added to the DOM before it can be clicked.
+      downloadLink.href = window.URL.createObjectURL(content)
+      downloadLink.onclick = destroyClickedElement
+      downloadLink.style.display = "none"
+      document.body.appendChild(downloadLink)
+    }
+  
+    downloadLink.click();
+}
+
 function CSVToArray(strData, strDelimiter){
     // Check to see if the delimiter is defined. If not,
     // then default to comma.
