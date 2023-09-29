@@ -55,6 +55,7 @@ createApp({
     },
     setup() {
         const lang = reactive({id:'en', label: 'English'})
+        const codeListVariableIndex = ref(null);
         const examples = [
             {
                 fileName: 'test.csv',
@@ -109,7 +110,7 @@ createApp({
         })
 
         return {
-            input, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
+            input, codeListVariableIndex, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
         }
     }
 }).mount('#app')
