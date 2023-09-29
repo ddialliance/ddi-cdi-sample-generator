@@ -1,6 +1,6 @@
 const { createApp, ref, reactive, computed, Utils } = Vue
 
-class Col{
+class Column{
     id
     name
     displayLabel
@@ -55,12 +55,12 @@ class Col{
         }
         for(const v of this.getUniqueValues()){
             var conceptId = this.id + '-concept-' + v
-            this.codeList.push(new Concept(conceptId, v, '#conceptScheme-'+this.id))
+            this.codeList.push(new Code(conceptId, v, '#conceptScheme-'+this.id))
         }
     }
 }
 
-class Concept{
+class Code{
     id
     prefLabel
     notation
@@ -136,13 +136,14 @@ createApp({
             
             var csv = CSVToArray(this.input.raw, this.input.delimiter)
             
-            //TODO: this should be tested for header/no header
-            this.recordCount = (csv.length - 1)
+            this.input.recordCount = csv.length
+            if(this.input.firstRowIsHeader) this.input.recordCount--
+
             this.input.columns.splice(0)
             var pos = 0
             for(const id of csv[0]){
                 var values = getColumnValues(csv, pos, this.input.firstRowIsHeader)
-                this.input.columns.push(new Col(id, pos, values))
+                this.input.columns.push(new Column(id, pos, values))
                 pos++
             }
         }
@@ -175,6 +176,7 @@ createApp({
             delimiter: ',',
             firstRowIsHeader: true,
             columns: [],
+            recordCount : 0,
             raw:""
         })
         const cv = {
@@ -186,8 +188,7 @@ createApp({
                 {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}
             ]
         }
-        //const columns = reactive([])
-        const recordCount = ref(0)
+
         const haveCodeLists = computed(() =>{
             return input.columns.filter(c => c.coded).length > 0
         })
@@ -205,7 +206,7 @@ createApp({
         })
 
         return {
-            input, recordCount, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
+            input, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
         }
     }
 }).mount('#app')
