@@ -8,9 +8,8 @@ TODOS:
 
     * typos:
 
-    -  "hasIndededDataType" → "hasIndededDataType"
+    - "hasIndededDataType" → "hasIndededDataType"
     - "PhysycalDataset" → "PhyisicalDataSet"
-
 
 
     A few more comments on your file :
@@ -20,12 +19,14 @@ TODOS:
     this should be
         "has": ["#Offense", "#Year", ...]
 
-    * the resulting graph is not connex, which I believe is an oversight... Don't you miss the following in the definition of "#dataset":
-        "isStructuredBy": "#datastructure",
+    * the resulting graph is not connex, which I believe is an oversight...
+      Don't you miss the following in the definition of "#dataset":
+         "isStructuredBy": "#datastructure",
     ?
 
-    * your data does not pass the SHACL validator -- some errors are glitches which should be fixed in the model / shape / json-ld context soon,
-    but the following seem to be relevant
+    * your data does not pass the SHACL validator -- 
+      some errors are glitches which should be fixed in the model / shape / json-ld context soon,
+      but the following seem to be relevant
 
         Violation 1 "Property may only have 1 value, but found 7" (cdi:DataStructure_has_PrimaryKey  of #datastructure) 
         Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:DataSet_has_DataPoint of #dataset)
@@ -34,7 +35,10 @@ TODOS:
 
     * regaring the 2nd violation above, I believe that Flavio told me today that he was considering relaxing this constraint, so it is probably moot (but you should check with him)
 
-    * regarding the 1st violation above, I'm assuming that maybe you consider the list of 7 element to be one primary key, but that's not how it should be modelled (as such, it says that each of the 7 component is a key on its owb).
+    * regarding the 1st violation above, 
+      I'm assuming that maybe you consider the list of 7 element to be one primary key, 
+      but that's not how it should be modelled 
+      (as such, it says that each of the 7 component is a key on its owb).
 
         should probably be
         "@id": "#datastructure",

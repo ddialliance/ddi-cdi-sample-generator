@@ -29,7 +29,7 @@ class Column{
             'displayLabel' : this.displayLabel
         }
         if(this.hasIntendedDataType){
-            variable.hasIntendedDataType = {'@id' : this.hasIntendedDataType}
+            variable.hasIntendedDataType = this.hasIntendedDataType
         }
         return variable
     }
