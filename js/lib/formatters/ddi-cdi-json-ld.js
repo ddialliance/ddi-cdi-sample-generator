@@ -1,6 +1,64 @@
+/*
+TODOS:
+    FROM: pierre-antoine@w3.org
+
+    * all CDI properties that expect an object (as opposed to a simple
+    string) will recognize strings as being IRIs, so no need to wrap them in
+    { "@id": ... }, including in lists
+
+    * typos:
+
+    -  "hasIndededDataType" → "hasIndededDataType"
+    - "PhysycalDataset" → "PhyisicalDataSet"
+
+
+
+    A few more comments on your file :
+
+    * in the 'LogicalRecor - has' property, you forgot the hash (#) in front of the local names, so instead of
+        "has": [ "Offense", "Year", ... ]
+    this should be
+        "has": ["#Offense", "#Year", ...]
+
+    * the resulting graph is not connex, which I believe is an oversight... Don't you miss the following in the definition of "#dataset":
+        "isStructuredBy": "#datastructure",
+    ?
+
+    * your data does not pass the SHACL validator -- some errors are glitches which should be fixed in the model / shape / json-ld context soon,
+    but the following seem to be relevant
+
+        Violation 1 "Property may only have 1 value, but found 7" (cdi:DataStructure_has_PrimaryKey  of #datastructure) 
+        Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:DataSet_has_DataPoint of #dataset)
+        Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:DataStore-allowsDuplicates of #dataStore)
+        Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:PhysicalDataSet-allowsDuplicates of #physicalDataset)
+
+    * regaring the 2nd violation above, I believe that Flavio told me today that he was considering relaxing this constraint, so it is probably moot (but you should check with him)
+
+    * regarding the 1st violation above, I'm assuming that maybe you consider the list of 7 element to be one primary key, but that's not how it should be modelled (as such, it says that each of the 7 component is a key on its owb).
+
+        should probably be
+        "@id": "#datastructure",
+        "@type": "DimensionalDataStructure",
+        "has": {
+            "@type": "PrimaryKey",
+            "isComposedOf": [
+            {"correspondsTo": "#dimensionComponent-Offense", "@type": "PrimaryKeyComponent" },
+            { "correspondsTo": "#dimensionComponent-Year", "@type": "PrimaryKeyComponent"  },
+            { "correspondsTo": "#dimensionComponent-Geography", "@type": "PrimaryKeyComponent"  },
+            { "correspondsTo": "#measureComponent-TotalNumber_of_Cases", "@type": "PrimaryKeyComponent"  }
+            ]
+        }
+        
+
+    Note that I also removed the ComponentPosition's from the description of the primary key, because this does not seem to fit in the model, and seemed redundant with the DimensionComponent's that are already there. You may want to adapt it if I am wrong.
+
+    best
+
+*/
+
 function toDdiCdiJsonLd(input){
     var cdi = {
-        '@context': "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+        '@context': "https://ddi-alliance.bitbucket.io/DDI-CDI/DDI-CDI_v1.0-rc1/encoding/json-ld/ddi-cdi.jsonld",
         '@graph':[]
     }
 
