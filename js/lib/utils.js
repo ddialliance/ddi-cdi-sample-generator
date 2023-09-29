@@ -13,6 +13,7 @@ class Column{
         this.values = values
         var type = guessType(values)
         if(type){
+            console.log('set type ', type)
             this.hasIntendedDataType = type
         }
         if(isNaN(id)){
@@ -195,6 +196,7 @@ function getColumnValues(csv, columnIndex, haveHeader){
 }
 
 function guessType(values){
+    console.log('guess type func', values)
     const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
     
     var intReg = /^\d+$/;

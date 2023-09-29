@@ -71,7 +71,7 @@
 
 		
 		<!-- Code List Modal -->
-		<div class="modal fade" id="codeListModal" tabindex="-1" aria-labelledby="codeListModalLabel" aria-hidden="true">
+		<div class="modal modal-dialog-scrollable fade" id="codeListModal" tabindex="-1" aria-labelledby="codeListModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 			<div v-if="codeListVariableIndex != null" class="modal-content">
 				<div class="modal-header">
@@ -124,7 +124,7 @@
 					</div>
 					<div class="col-md-2">
 						<label class="form-label" :class="{notFirst: (column.position != 0)}">Type</label>
-						<select v-model="column.hasIndendedDataType" class="form-select"
+						<select v-model="column.hasIntendedDataType" class="form-select"
 							aria-label="Default select example">
 							<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
 						</select>
