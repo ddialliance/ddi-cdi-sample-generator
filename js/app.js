@@ -159,6 +159,28 @@ createApp({
         const haveCodeLists = computed(() =>{
             return columns.filter(c => c.coded).length > 0
         })
+		
+        const ddicOutput = computed(() => {
+			var ddic = '<codeBook xmlns="ddi:codebook:2_5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd">'
+			ddic = ddic + '  <dataDscr source="producer">'
+			
+			for(const c of columns){
+				ddic = ddic + '    <var ID="' + c.id + '" name="' + c.name + '" source="producer">'
+				
+				ddic = ddic + '    </var>'
+			}
+			
+			ddic = ddic + '  </dataDscr>'
+			ddic = ddic + '</codeBook>'
+			return ddic
+		})	
+
+        const ddilOutput = computed(() => {
+			var ddil = '<codeBook xmlns="ddi:codebook:2_5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd">'
+			
+			ddil = ddil + '</codeBook>'
+			return ddil
+		})		
 
         const cdiOutput = computed(() => {
             var cdi = {
@@ -296,7 +318,7 @@ createApp({
         })
 
         return {
-            input, firstRowIsHeader, recordCount, haveCodeLists, cv, examples, columns, cdiOutput
+            input, firstRowIsHeader, recordCount, haveCodeLists, cv, examples, columns, cdiOutput, ddilOutput, ddicOutput
         }
     }
 }).mount('#app')

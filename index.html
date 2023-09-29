@@ -112,6 +112,12 @@
 				<li class="nav-item" role="presentation">
 				  <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#cdi" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="true">⚗️ ddi-cdi (json-ld)</button>
 				</li>
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ddil" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">&lt;&gt; ddi-l (xml)</button>
+				</li>
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#ddic" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">&lt;&gt; ddi-c (xml)</button>
+				</li>
 			  </ul>
 			  <div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade" id="csv" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -123,6 +129,20 @@
 				<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 					<div class="form-floating mb-3">
 						<textarea v-html="cdiOutput" rows="10" style="height:100%;" class="form-control"
+							placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
+							disabled></textarea>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="ddil" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+					<div class="form-floating mb-3">
+						<textarea v-html="ddilOutput" rows="10" style="height:100%;" class="form-control"
+							placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
+							disabled></textarea>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="ddic" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+					<div class="form-floating mb-3">
+						<textarea v-html="ddicOutput" rows="10" style="height:100%;" class="form-control"
 							placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100px"
 							disabled></textarea>
 					</div>
