@@ -34,6 +34,7 @@
 
 <body>
 	<div id="app">
+		<!-- top toolbar -->
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#">
@@ -56,6 +57,8 @@
 				</div>
 			</div>
 		</nav>
+
+		<!-- startup message -->
 		<div v-if="input.fileName == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
@@ -69,38 +72,7 @@
 			</div>
 		</div>
 
-		
-		<!-- Code List Modal -->
-		<div class="modal modal-dialog-scrollable fade" id="codeListModal" tabindex="-1" aria-labelledby="codeListModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-			<div v-if="codeListVariableIndex != null" class="modal-content">
-				<div class="modal-header">
-				<h1 class="modal-title fs-5" id="codeListModalLabel">📦Code list <span v-html="input.columns[codeListVariableIndex].name" class="badge bg-secondary"></span></h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<form class="mb-4">
-						<div class="row" v-for="(code, index) in input.columns[codeListVariableIndex].codeList">
-							<div class="col-md-4">
-								<label class="form-label" :class="{notFirst: (index != 0)}">Code</label>
-								<input v-model="code.notation" type="text" class="form-control" disabled>
-							</div>
-							<div class="col-md-8">
-								<label class="form-label" :class="{notFirst: (index != 0)}">Name</label>
-								<input v-model="code.prefLabel" type="text" class="form-control">
-							</div>
-						</div>
-					</form>
-					
-				</div>
-				<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#codeListModal">Close</button>
-				</div>
-			</div>
-			</div>
-		</div>
-  
-
+		<!-- Instance Variable list -->
 		<div v-if="input.fileName != null">
 			<form class="mb-4">
 				<div class="row" v-for="(column, index) in input.columns">
@@ -138,7 +110,38 @@
 					</div>
 				</div>
 			</form>
-			
+
+			<!-- Code List Modal -->
+			<div class="modal modal-dialog-scrollable fade" id="codeListModal" tabindex="-1" aria-labelledby="codeListModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div v-if="codeListVariableIndex != null" class="modal-content">
+					<div class="modal-header">
+					<h1 class="modal-title fs-5" id="codeListModalLabel">📦Code list <span v-html="input.columns[codeListVariableIndex].name" class="badge bg-secondary"></span></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form class="mb-4">
+							<div class="row" v-for="(code, index) in input.columns[codeListVariableIndex].codeList">
+								<div class="col-md-4">
+									<label class="form-label" :class="{notFirst: (index != 0)}">Code</label>
+									<input v-model="code.notation" type="text" class="form-control" disabled>
+								</div>
+								<div class="col-md-8">
+									<label class="form-label" :class="{notFirst: (index != 0)}">Name</label>
+									<input v-model="code.prefLabel" type="text" class="form-control">
+								</div>
+							</div>
+						</form>
+						
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#codeListModal">Close</button>
+					</div>
+				</div>
+				</div>
+			</div>
+
+			<!-- output in tabs -->
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
 				  <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#csv" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">📄 csv</button>
