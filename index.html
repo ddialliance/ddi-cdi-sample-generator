@@ -12,6 +12,9 @@
 	
 	<link rel="icon" href="resources/ddi-cdi-sample-generator.svg">
 	<script src="js/lib/utils.js"></script>
+	<script src="js/lib/formatters/ddi-cdi-json-ld.js"></script>
+	<script src="js/lib/formatters/ddi-l-xml.js"></script>
+	<script src="js/lib/formatters/ddi-c-xml.js"></script>
 	<style>
 		textarea{
 			font-family: monospace;
@@ -47,7 +50,7 @@
 							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
 						</li>
 						<li class="nav-item">
-							<button @click="saveCdi()" :disabled="input.id == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
+							<button @click="saveCdi()" :disabled="input.fileName == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
 						</li>
 						<li class="nav-item">
 							<button :disabled="haveCodeLists == false" type="button" class="btn btn-light" title="View and edit codelists">📦 edit codelists</button>
@@ -56,7 +59,7 @@
 				</div>
 			</div>
 		</nav>
-		<div v-if="input.id == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
+		<div v-if="input.fileName == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
 				Open a csv data file of load one of the examples.<br/>
@@ -64,13 +67,13 @@
 				<strong>🗃️ example csv:s</strong>
 				
 				<span v-for="e in examples">
-					<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.id"></span></a>
+					<a @click="loadExample(e)" class="dropdown-item" href="#"><span>📄</span><span v-html="e.fileName"></span></a>
 				</span>
 			</div>
 		</div>
-		<div v-if="input.id != null">
+		<div v-if="input.fileName != null">
 			<form class="mb-4">
-				<div class="row" v-for="column in columns">
+				<div class="row" v-for="column in input.columns">
 					<div class="col-md-1">
 						<label class="form-label" :class="{notFirst: (column.position != 0)}">Position</label>
 						<input v-model="column.position" type="text" class="form-control" disabled>
