@@ -77,32 +77,32 @@
 			<form class="mb-4">
 				<div class="row" v-for="(column, index) in input.columns">
 					<div class="col-md-1">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Position</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Position</label>
 						<input v-model="column.position" type="text" class="form-control" disabled>
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Name</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Name</label>
 						<input v-model="column.name" type="text" class="form-control">
 					</div>
 					<div class="col-md-4">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Label</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Label</label>
 						<input v-model="column.displayLabel" type="text" class="form-control">
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Role</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Role</label>
 						<select v-model="column.role" class="form-select" aria-label="Default select example">
 							<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
 						</select>
 					</div>
 					<div class="col-md-2">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Type</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Type</label>
 						<select v-model="column.hasIntendedDataType" class="form-select"
 							aria-label="Default select example">
 							<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
 						</select>
 					</div>
 					<div class="col-md-1">
-						<label class="form-label" :class="{notFirst: (column.position != 0)}">Code</label>
+						<label class="form-label" :class="{notFirst: (index > 0)}">Code</label>
 						<div class="form-check checkbox-xl">
 							<input v-model="column.coded" @change="column.createCodeList()" class="form-check-input" type="checkbox" id="flexCheckChecked">
 							<button v-if="column.coded" @click="codeListVariableIndex=index" data-bs-toggle="modal" data-bs-target="#codeListModal" type="button" class="btn btn-light" title="Edit codelist">📦</button>
@@ -114,30 +114,29 @@
 			<!-- Code List Modal -->
 			<div class="modal modal-dialog-scrollable fade" id="codeListModal" tabindex="-1" aria-labelledby="codeListModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-				<div v-if="codeListVariableIndex != null" class="modal-content">
-					<div class="modal-header">
-					<h1 class="modal-title fs-5" id="codeListModalLabel">📦Code list <span v-html="input.columns[codeListVariableIndex].name" class="badge bg-secondary"></span></h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<form class="mb-4">
-							<div class="row" v-for="(code, index) in input.columns[codeListVariableIndex].codeList">
-								<div class="col-md-4">
-									<label class="form-label" :class="{notFirst: (index != 0)}">Code</label>
-									<input v-model="code.notation" type="text" class="form-control" disabled>
+					<div v-if="codeListVariableIndex != null" class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="codeListModalLabel">📦Code list <span v-html="input.columns[codeListVariableIndex].name" class="badge bg-secondary"></span></h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form class="mb-4">
+								<div class="row" v-for="(code, index) in input.columns[codeListVariableIndex].codeList">
+									<div class="col-md-4">
+										<label class="form-label" :class="{notFirst: (index > 0)}">Code</label>
+										<input v-model="code.notation" type="text" class="form-control" disabled>
+									</div>
+									<div class="col-md-8">
+										<label class="form-label" :class="{notFirst: (index > 0)}">Name</label>
+										<input v-model="code.prefLabel" type="text" class="form-control">
+									</div>
 								</div>
-								<div class="col-md-8">
-									<label class="form-label" :class="{notFirst: (index != 0)}">Name</label>
-									<input v-model="code.prefLabel" type="text" class="form-control">
-								</div>
-							</div>
-						</form>
-						
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#codeListModal">Close</button>
+						</div>
 					</div>
-					<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#codeListModal">Close</button>
-					</div>
-				</div>
 				</div>
 			</div>
 
