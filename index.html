@@ -79,11 +79,22 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					this is the codelist
+					<form class="mb-4">
+						<div class="row" v-for="(code, index) in input.columns[codeListVariableIndex].codeList">
+							<div class="col-md-4">
+								<label class="form-label" :class="{notFirst: (index != 0)}">Code</label>
+								<input v-model="code.notation" type="text" class="form-control" disabled>
+							</div>
+							<div class="col-md-8">
+								<label class="form-label" :class="{notFirst: (index != 0)}">Name</label>
+								<input v-model="code.prefLabel" type="text" class="form-control">
+							</div>
+						</div>
+					</form>
 					
 				</div>
 				<div class="modal-footer">
-				<button type="button" class="btn btn-primary">Close</button>
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#codeListModal">Close</button>
 				</div>
 			</div>
 			</div>
