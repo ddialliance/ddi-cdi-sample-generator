@@ -24,10 +24,10 @@ class Column{
     }
     toJSON(){
         var variable = {
-            '@id': '#' + this.id,
-            '@type': 'InstanceVariable',
-            name: this.name,
-            displayLabel: this.displayLabel
+            '@id' : '#' + this.id,
+            '@type' : 'InstanceVariable',
+            'name' : this.name,
+            'displayLabel' : this.displayLabel
         }
         if(this.hasIntendedDataType){
             variable.hasIntendedDataType = {'@id' : this.hasIntendedDataType}
@@ -36,9 +36,9 @@ class Column{
     }
     getConceptScheme(){
         var conceptScheme = {
-            '@id': '#conceptScheme-'+this.id,
-            '@type': "skos:ConceptScheme",
-            'skos:hasTopConcept':[]
+            '@id' : '#conceptScheme-'+this.id,
+            '@type' : "skos:ConceptScheme",
+            'skos:hasTopConcept' : []
         }
         for(const v of this.getUniqueValues()){
             conceptScheme['skos:hasTopConcept'].push({'@id':'#'+this.id + '-concept-' + v})
@@ -74,12 +74,12 @@ class Code{
     }
     toJSON(){
         return {
-            '@id': '#' + this.id,
-            '@type': 'skos:Concept',
-            notation: this.notation,
-            prefLabel: this.prefLabel,
-            definition: this.definition,
-            inScheme:{'@id': this.inScheme}
+            '@id' : '#' + this.id,
+            '@type' : 'skos:Concept',
+            'notation' : this.notation,
+            'prefLabel' : this.prefLabel,
+            'definition' : this.definition,
+            'inScheme' :{'@id': this.inScheme}
         }
     }
 }
@@ -87,13 +87,15 @@ class Code{
 createApp({
     methods:{
         openCsv(){
-            let input = document.createElement('input')
-            input.type = 'file'
-            input.accept = '.csv'
-            input.onchange = _ => {
-                let files = Array.from(input.files);
-                
+            let inputElement = document.createElement('input')
+            inputElement.type = 'file'
+            inputElement.accept = '.csv'
+            inputElement.onchange = _ => {
+                let files = Array.from(inputElement.files);
+                console.log(files[0])
                 this.input.fileName = files[0].name
+                this.input.type = files[0].type
+                this.input.size = files[0].size
                 var reader = new FileReader()
                 reader.readAsText(files[0], 'UTF-8')
 
@@ -103,7 +105,7 @@ createApp({
                     this.reloadCsv()
                 }
             };
-            input.click();
+            inputElement.click();
         },
         saveCdi(){
             var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' })
@@ -129,6 +131,7 @@ createApp({
         loadExample(example){
             this.input.raw = example.raw
             this.input.fileName = example.fileName
+            this.input.size = example.raw.length
             this.reloadCsv()
         },
         reloadCsv(){
@@ -173,6 +176,7 @@ createApp({
         ]
         const input = reactive({
             fileName: null,
+            type: 'text/csv',
             delimiter: ',',
             firstRowIsHeader: true,
             columns: [],
