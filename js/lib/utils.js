@@ -13,7 +13,6 @@ class Column{
         this.values = values
         var type = guessType(values)
         if(type){
-            console.log('set type ', type)
             this.hasIntendedDataType = type
         }
         if(isNaN(id)){
@@ -81,6 +80,17 @@ class Code{
             'inScheme' :{'@id': this.inScheme}
         }
     }
+}
+
+function formatXml(xml, tab) { // tab = optional indent value, default is tab (  )
+    var formatted = '', indent= '';
+    tab = tab || '  ';
+    xml.split(/>\s*</).forEach(function(node) {
+        if (node.match( /^\/\w/ )) indent = indent.substring(tab.length); // decrease indent by one 'tab'
+        formatted += indent + '<' + node + '>\r\n';
+        if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += tab;              // increase indent
+    });
+    return formatted.substring(1, formatted.length-3);
 }
 
 function saveFile(fileName, content){
@@ -196,7 +206,6 @@ function getColumnValues(csv, columnIndex, haveHeader){
 }
 
 function guessType(values){
-    console.log('guess type func', values)
     const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
     
     var intReg = /^\d+$/;

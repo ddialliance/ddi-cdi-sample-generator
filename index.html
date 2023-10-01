@@ -169,7 +169,7 @@
 						<label class="form-label" :class="{notFirst: (index > 0)}">Code</label>
 						<div class="form-check checkbox-xl">
 							<input v-model="column.coded" @change="column.createCodeList()" class="form-check-input" type="checkbox" id="flexCheckChecked">
-							<button v-if="column.coded" @click="codeListVariableIndex=index" style="width:2.4rem !important" data-bs-toggle="modal" data-bs-target="#codeListModal" type="button" class="btn btn-light" title="Edit codelist">📦</button>
+							<button v-if="column.coded" @click="codeListVariableIndex=index" style="width:2rem !important" data-bs-toggle="modal" data-bs-target="#codeListModal" type="button" class="btn btn-light" title="Edit codelist">📦</button>
 						</div>
 					</div>
 				</div>

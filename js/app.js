@@ -75,13 +75,13 @@ createApp({
             }
         ]
         const input = reactive({
-            fileName: null,
+            fileName: "tiny.csv",
             type: 'text/csv',
             delimiter: ',',
             firstRowIsHeader: true,
             columns: [],
             recordCount : 0,
-            raw:""
+            raw:"id,name,value,some date\n0,Pelle,13,2010-01-12\n1,Claus,15,2020-10-10"
         })
         const cv = {
             colRoles : [{id:'Dimension'}, {id:'Attribute'}, {id:'Measure'}],
