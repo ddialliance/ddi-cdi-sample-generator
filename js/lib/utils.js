@@ -93,8 +93,8 @@ function formatXml(xml, tab) { // tab = optional indent value, default is tab ( 
     return formatted.substring(1, formatted.length-3);
 }
 
-function createTextNode(xmlDoc, name, text){
-    var element = xmlDoc.createElement(name)
+function createTextNode(xmlDoc, ns, name, text){
+    var element = xmlDoc.createElementNS(ns,name)
     var elementText = xmlDoc.createTextNode(text)
     element.appendChild(elementText)
     return element
