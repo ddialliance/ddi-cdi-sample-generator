@@ -30,6 +30,11 @@
 			}
 		}
 	</style>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/xml.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
 </head>
 
 <body>
@@ -202,23 +207,17 @@
 					</div>
 					<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="form-floating mb-3">
-							<textarea v-html="cdiOutput" rows="20" style="height:100%;" class="form-control"
-								placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100vh"
-								disabled></textarea>
+							<pre><code v-html="output.cdi" class="language-json"></code></pre>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="ddil" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="form-floating mb-3">
-							<textarea v-html="ddilOutput" rows="20" style="height:100%;" class="form-control"
-								placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100vh"
-								disabled></textarea>
+							<pre><code v-html="output.ddiL" class="language-xml"></code></pre>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="ddic" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="form-floating mb-3">
-							<textarea v-html="ddicOutput" rows="20" style="height:100%;" class="form-control"
-								placeholder="DDI-CDI output" id="ddiCdiOutput" style="height: 100vh"
-								disabled></textarea>
+							<pre><code v-html="output.ddiC" class="language-xml"></code></pre>
 						</div>
 					</div>
 				</div>

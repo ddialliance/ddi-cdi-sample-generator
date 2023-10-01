@@ -96,21 +96,26 @@ createApp({
         const haveCodeLists = computed(() =>{
             return input.columns.filter(c => c.coded).length > 0
         })
-		
-        const ddicOutput = computed(() => {
-			return toDdiCXml(input)
-		})	
 
-        const ddilOutput = computed(() => {
-			return toDdiLXml(input)
-		})
-
-        const cdiOutput = computed(() => {
-            return toDdiCdiJsonLd(input)
+        const output = computed(() => {
+            return {
+                'cdi' : (hljs.highlight(
+                    toDdiCdiJsonLd(input),
+                    { language: 'json' }
+                ).value),
+                'ddiC' : hljs.highlight(
+                    toDdiCXml(input),
+                    { language: 'xml' }
+                ).value,
+                'ddiL' : hljs.highlight(
+                    toDdiLXml(input),
+                    { language: 'xml' }
+                ).value,
+            }
         })
 
         return {
-            input, codeListVariableIndex, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
+            input, output, codeListVariableIndex, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
         }
     }
 }).mount('#app')
