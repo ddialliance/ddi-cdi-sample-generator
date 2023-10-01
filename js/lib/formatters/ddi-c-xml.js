@@ -16,26 +16,17 @@ function toDdiCXml(input){
         v.setAttribute("representationType", getVarRepresentationType(c))
 
         if(c.displayLabel){
-            var labl = xmlDoc.createElement("labl")
-            var lablText = xmlDoc.createTextNode(c.displayLabel)
-            labl.appendChild(lablText)
-            v.appendChild(labl)
+            v.appendChild(createTextNode(xmlDoc, "labl", c.displayLabel))
         }
 
         if(c.coded){
             for(const code of c.codeList){
                 var catgry = xmlDoc.createElement("catgry")
 
-                var catValu = xmlDoc.createElement("catValu")
-                var catValuText = xmlDoc.createTextNode(code.notation)
-                catValu.appendChild(catValuText)
-                catgry.appendChild(catValu)
+                catgry.appendChild(createTextNode(xmlDoc, "catValu", code.notation))
 
                 if(code.prefLabel){
-                    var labl = xmlDoc.createElement("labl")
-                    var lablText = xmlDoc.createTextNode(code.prefLabel)
-                    labl.appendChild(lablText)
-                    catgry.appendChild(labl)
+                    catgry.appendChild(createTextNode(xmlDoc, "labl", code.prefLabel))
                 }
 
                 v.appendChild(catgry)

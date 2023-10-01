@@ -93,6 +93,13 @@ function formatXml(xml, tab) { // tab = optional indent value, default is tab ( 
     return formatted.substring(1, formatted.length-3);
 }
 
+function createTextNode(xmlDoc, name, text){
+    var element = xmlDoc.createElement(name)
+    var elementText = xmlDoc.createTextNode(text)
+    element.appendChild(elementText)
+    return element
+}
+
 function saveFile(fileName, content){
   
     var downloadLink = document.createElement("a")
