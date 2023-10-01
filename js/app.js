@@ -23,7 +23,7 @@ createApp({
             inputElement.click();
         },
         saveCdi(){
-            var textFileAsBlob = new Blob([ this.cdiOutput ], { type: 'application/ld+json' })
+            var textFileAsBlob = new Blob([ this.output.cdi ], { type: 'application/ld+json' })
             var fileNameToSaveAs = this.input.fileName.replace('.csv', '.jsonld')
             saveFile(fileNameToSaveAs, textFileAsBlob)
         },
@@ -99,23 +99,22 @@ createApp({
 
         const output = computed(() => {
             return {
-                'cdi' : (hljs.highlight(
-                    toDdiCdiJsonLd(input),
-                    { language: 'json' }
-                ).value),
-                'ddiC' : hljs.highlight(
-                    toDdiCXml(input),
-                    { language: 'xml' }
-                ).value,
-                'ddiL' : hljs.highlight(
-                    toDdiLXml(input),
-                    { language: 'xml' }
-                ).value,
+                'cdi' : toDdiCdiJsonLd(input),
+                'ddiC' : toDdiCXml(input),
+                'ddiL' : toDdiLXml(input)
+            }
+        })
+
+        const outputFormated = computed(() => {
+            return {
+                'cdi' : (hljs.highlight(toDdiCdiJsonLd(input), { language: 'json' }).value),
+                'ddiC' : (hljs.highlight(toDdiCXml(input), { language: 'xml' }).value),
+                'ddiL' : (hljs.highlight(toDdiLXml(input), { language: 'xml' }).value),
             }
         })
 
         return {
-            input, output, codeListVariableIndex, haveCodeLists, cv, examples, cdiOutput, ddilOutput, ddicOutput
+            input, output, outputFormated, codeListVariableIndex, haveCodeLists, cv, examples
         }
     }
 }).mount('#app')
