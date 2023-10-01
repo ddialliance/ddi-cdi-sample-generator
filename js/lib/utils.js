@@ -24,8 +24,10 @@ class Column{
         var variable = {
             '@id' : '#' + this.id,
             '@type' : 'InstanceVariable',
-            'name' : this.name,
-            'displayLabel' : this.displayLabel
+            'name' : this.name
+        }
+        if(this.displayLabel){
+            variable.displayLabel = this.displayLabel
         }
         if(this.hasIntendedDataType){
             variable.hasIntendedDataType = this.hasIntendedDataType
@@ -39,7 +41,7 @@ class Column{
             'skos:hasTopConcept' : []
         }
         for(const v of this.getUniqueValues()){
-            conceptScheme['skos:hasTopConcept'].push({'@id':'#'+this.id + '-concept-' + v})
+            conceptScheme['skos:hasTopConcept'].push('#'+this.id + '-concept-' + v)
         }
         return conceptScheme
     }
@@ -64,10 +66,9 @@ class Code{
     notation
     definition
     inScheme
-    constructor(id, prefLabel, inScheme){
+    constructor(id, notation, inScheme){
         this.id = id
-        this.prefLabel = prefLabel
-        this.notation = prefLabel
+        this.notation = notation
         this.inScheme = inScheme
     }
     toJSON(){
@@ -77,7 +78,7 @@ class Code{
             'notation' : this.notation,
             'prefLabel' : this.prefLabel,
             'definition' : this.definition,
-            'inScheme' :{'@id': this.inScheme}
+            'inScheme' : this.inScheme
         }
     }
 }

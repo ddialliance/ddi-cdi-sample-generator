@@ -19,11 +19,6 @@ TODOS:
     this should be
         "has": ["#Offense", "#Year", ...]
 
-    * the resulting graph is not connex, which I believe is an oversight...
-      Don't you miss the following in the definition of "#dataset":
-         "isStructuredBy": "#datastructure",
-    ?
-
     * your data does not pass the SHACL validator -- 
       some errors are glitches which should be fixed in the model / shape / json-ld context soon,
       but the following seem to be relevant
@@ -46,10 +41,10 @@ TODOS:
         "has": {
             "@type": "PrimaryKey",
             "isComposedOf": [
-            {"correspondsTo": "#dimensionComponent-Offense", "@type": "PrimaryKeyComponent" },
-            { "correspondsTo": "#dimensionComponent-Year", "@type": "PrimaryKeyComponent"  },
-            { "correspondsTo": "#dimensionComponent-Geography", "@type": "PrimaryKeyComponent"  },
-            { "correspondsTo": "#measureComponent-TotalNumber_of_Cases", "@type": "PrimaryKeyComponent"  }
+                { "correspondsTo": "#dimensionComponent-Offense", "@type": "PrimaryKeyComponent" },
+                { "correspondsTo": "#dimensionComponent-Year", "@type": "PrimaryKeyComponent" },
+                { "correspondsTo": "#dimensionComponent-Geography", "@type": "PrimaryKeyComponent" },
+                { "correspondsTo": "#measureComponent-TotalNumber_of_Cases", "@type": "PrimaryKeyComponent" }
             ]
         }
         
@@ -75,7 +70,7 @@ function toDdiCdiJsonLd(input){
         'recordCount' : input.recordCount,
         'has' : []
     }
-    dataStore['has'].push({'@id' : '#logicalRecord'})
+    dataStore['has'].push('#logicalRecord')
     
     var physicalDataset = {
         '@id' : "#physicalDataset",
@@ -100,8 +95,8 @@ function toDdiCdiJsonLd(input){
         'mapsTo' : '#logicalRecord',
         'has' : []
     }
-    physicalRecordSegment['has'].push({'@id' : '#physicalSegmentLayout'})
-    physicalRecordSegment['has'].push({'@id' : '#physicalDataset'})
+    physicalRecordSegment['has'].push('#physicalSegmentLayout')
+    physicalRecordSegment['has'].push('#physicalDataset')
 
     var logicalRecord = {
         '@id' : "#logicalRecord",
@@ -112,6 +107,7 @@ function toDdiCdiJsonLd(input){
     var dataset = {
         '@id' : "#dataset",
         '@type': "DimensionalDataSet",
+        "isStructuredBy": "#datastructure",
         'has' : []
     }
 
@@ -128,20 +124,20 @@ function toDdiCdiJsonLd(input){
     var componentPositions = []
 
     for(const c of input.columns){
-        logicalRecord['has'].push({'@id': c.id})
+        logicalRecord['has'].push('#' + c.id)
         valueMappings.push({
-            '@id' : '#valueMapping' + c.id,
+            '@id' : '#valueMapping-' + c.id,
             '@type' : 'ValueMapping',
-            'has' : [{'@id' : '#' + c.id}]
+            'has' : ['#' + c.id]
         })
-        physicalSegmentLayout['has'].push({'@id' : '#valueMapping' + c.id})
+        physicalSegmentLayout['has'].push('#valueMapping-' + c.id)
         if(c.role == 'Dimension'){
             var id = "#dimensionalKey-"+c.id
             dimensionalKeys.push({
                 '@id' : id,
                 '@type' : 'DimensionalKey'
             })
-            dataset['has'].push({'@id' : id})
+            dataset['has'].push(id)
             id = "#dimensionComponent-"+c.id
             components.push({
                 '@id' : id,
@@ -153,8 +149,8 @@ function toDdiCdiJsonLd(input){
                 '@type' : 'ComponentPosition',
                 'value' : c.position
             })
-            datastructure['has'].push({'@id' : id})
-            datastructure['has'].push({'@id' : '#componentPosition-' + c.id})
+            datastructure['has'].push(id)
+            datastructure['has'].push('#componentPosition-' + c.id)
         }
         if(c.role == 'Attribute'){
             var id = "#attributeComponent-"+c.id
@@ -163,7 +159,7 @@ function toDdiCdiJsonLd(input){
                 '@type' : 'AttributeComponent',
                 'isDefinedBy' : '#' + c.id
             })
-            datastructure['has'].push({'@id' : id})
+            datastructure['has'].push(id)
         }
         if(c.role == 'Measure'){
             var id = "#measureComponent-"+c.id
@@ -172,12 +168,7 @@ function toDdiCdiJsonLd(input){
                 '@type' : 'MeasureComponent',
                 'isDefinedBy' : '#' + c.id
             })
-            datastructure['has'].push({'@id' : id})
-        }
-        //TODO: create concept scheme, connect it to the variable
-        if(c.coded){
-            cdi['@graph'] = cdi['@graph'].concat(c.getConceptScheme())
-            cdi['@graph'] = cdi['@graph'].concat(c.codeList)
+            datastructure['has'].push(id)
         }
     }
 
@@ -196,6 +187,14 @@ function toDdiCdiJsonLd(input){
     cdi['@graph'] = cdi['@graph'].concat(datastructure)
     cdi['@graph'] = cdi['@graph'].concat(components)
     cdi['@graph'] = cdi['@graph'].concat(componentPositions)
+
+    for(const c of input.columns){
+        //TODO: create concept scheme, connect it to the variable
+        if(c.coded){
+            cdi['@graph'] = cdi['@graph'].concat(c.getConceptScheme())
+            cdi['@graph'] = cdi['@graph'].concat(c.codeList)
+        }
+    }
 
     return JSON.stringify(cdi, null, 2)
 }

@@ -36,7 +36,7 @@ function toDdiCXml(input){
         v.setAttribute("representationType", getVarRepresentationType(c))
 
         if(c.displayLabel){
-            v.appendChild(createTextNode(xmlDoc,ns, "labl", c.displayLabel))
+            v.appendChild(createTextNode(xmlDoc, ns, "labl", c.displayLabel))
         }
 
         if(c.coded){
@@ -51,7 +51,6 @@ function toDdiCXml(input){
 
                 v.appendChild(catgry)
             }
-
         }
 
         dataDscr.appendChild(v)
