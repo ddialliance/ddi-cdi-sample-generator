@@ -97,8 +97,18 @@
 						<h5>Created by</h5>
 						<p>
 							<ul>
-								<li>Olof Olsson, SND</li>
-								<li>Oliver Hopt, GESIS</li>
+								<li>
+									Olof Olsson, SND
+									<a href="https://orcid.org/0000-0002-7365-0691">
+										<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
+									</a>
+								</li>
+								<li>
+									Oliver Hopt, GESIS
+									<a href="https://orcid.org/0000-0002-3848-574X">
+										<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" />
+									</a>
+								</li>
 							</ul>
 						</p>
 					</div>
@@ -157,14 +167,14 @@
 					<div class="col-md-2">
 						<label class="form-label" :class="{notFirst: (index > 0)}">Role</label>
 						<select v-model="column.role" class="form-select" aria-label="Default select example">
-							<option v-for="role in cv.colRoles" :value="role.id">{{ role.id }}</option>
+							<option v-for="colRole in cv.colRoles" :value="colRole.id">{{ colRole.id }}</option>
 						</select>
 					</div>
 					<div class="col-md-2">
 						<label class="form-label" :class="{notFirst: (index > 0)}">Type</label>
 						<select v-model="column.hasIntendedDataType" class="form-select"
 							aria-label="Default select example">
-							<option v-for="type in cv.colTypes" :value="type.id">{{ type.label }}</option>
+							<option v-for="colType in cv.colTypes" :value="colType.id">{{ colType.label }}</option>
 						</select>
 					</div>
 					<div class="col-md-1">
