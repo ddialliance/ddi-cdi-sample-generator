@@ -2,22 +2,13 @@
 TODOS:
     FROM: pierre-antoine@w3.org
 
-    * all CDI properties that expect an object (as opposed to a simple
-    string) will recognize strings as being IRIs, so no need to wrap them in
-    { "@id": ... }, including in lists
+    On 28/09/2023 23:51, Pierre-Antoine Champin wrote:
 
-    * typos:
-
-    - "hasIndededDataType" → "hasIndededDataType"
-    - "PhysycalDataset" → "PhyisicalDataSet"
-
+    * all CDI properties that expect an object (as opposed to a simple string) 
+      will recognize strings as being IRIs, so no need to wrap them in
+     { "@id": ... }, including in lists
 
     A few more comments on your file :
-
-    * in the 'LogicalRecor - has' property, you forgot the hash (#) in front of the local names, so instead of
-        "has": [ "Offense", "Year", ... ]
-    this should be
-        "has": ["#Offense", "#Year", ...]
 
     * your data does not pass the SHACL validator -- 
       some errors are glitches which should be fixed in the model / shape / json-ld context soon,
@@ -28,7 +19,8 @@ TODOS:
         Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:DataStore-allowsDuplicates of #dataStore)
         Violation 1 "Property needs to have at least 1 values, but found 0" (cdi:PhysicalDataSet-allowsDuplicates of #physicalDataset)
 
-    * regaring the 2nd violation above, I believe that Flavio told me today that he was considering relaxing this constraint, so it is probably moot (but you should check with him)
+    * regaring the 2nd violation above, I believe that Flavio told me today that he was considering relaxing this constraint, 
+      so it is probably moot (but you should check with him)
 
     * regarding the 1st violation above, 
       I'm assuming that maybe you consider the list of 7 element to be one primary key, 
@@ -49,10 +41,16 @@ TODOS:
         }
         
 
-    Note that I also removed the ComponentPosition's from the description of the primary key, because this does not seem to fit in the model, and seemed redundant with the DimensionComponent's that are already there. You may want to adapt it if I am wrong.
+    Note that I also removed the ComponentPosition's from the description of the primary key, because this does not seem to fit in the model, 
+    and seemed redundant with the DimensionComponent's that are already there. 
+    You may want to adapt it if I am wrong.
+
+    another tip about the JSON-LD context :
+
+    you can use "iri" instead of "@id", and "type" instead of "@type" (the context contains the appropriate aliases).
+    The @-keyword are sometimes frowned upon by JSON developers (as you can't use them as simple attribute).
 
     best
-
 */
 
 function toDdiCdiJsonLd(input){
