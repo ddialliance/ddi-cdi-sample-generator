@@ -56,10 +56,7 @@
 							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
 						</li>
 						<li class="nav-item">
-							<button @click="saveCdi()" :disabled="input.fileName == null" type="button" class="btn btn-light" title="save ddi-cdi json-ld">💾 save ddi-cdi</button>
-						</li>
-						<li class="nav-item">
-							<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#aboutModal" title="about this app">ℹ️</button>
+							<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#aboutModal" title="about this app">ℹ️ about</button>
 						</li>
 					</ul>
 				</div>
@@ -205,7 +202,6 @@
 							 <span v-html="input.fileName"></span> 
 							  <!--
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								
 								<button class="btn btn-light me-md-2" type="button">💾</button>
 								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
 							  </div>
@@ -223,14 +219,14 @@
 					<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="card">
 							<div class="card-header">
-							 <span>json-ld</span> 
-							  <!--
+							 
+							  
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								
-								<button class="btn btn-light me-md-2" type="button">💾</button>
-								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+								<button class="btn btn-light me-md-2" type="button" disabled>json-ld</button>
+								<button @click="saveCdi()" class="btn btn-light me-md-2" type="button" title="save ddi-cdi">💾 save</button>
+								<!--<button class="btn btn-light" type="button" title="copy to clipboard">📋</button> -->
 							  </div>
-							  -->
+							  
 							</div>
 							<div class="card-body">
 								<div class="form-floating mb-3">
