@@ -31,6 +31,10 @@
 			form .row .notFirst{
 				display:none;
 			}
+
+			form hr {
+				display: none;
+			}
 		}
 	</style>
 
@@ -191,6 +195,7 @@
 							<button v-if="column.coded" @click="codeListVariableIndex=index" data-bs-toggle="modal" data-bs-target="#codeListModal" type="button" class="btn btn-outline-secondary">✏️</button>
 						</div>
 					</div>
+					<hr class="mt-4" />
 				</div>
 			</form>
 		</div>
