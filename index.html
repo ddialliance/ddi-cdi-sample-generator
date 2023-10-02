@@ -199,13 +199,10 @@
 					<div class="tab-pane fade" id="csv" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 						<div class="card">
 							<div class="card-header">
-							 <span v-html="input.fileName"></span> 
-							  <!--
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								<button class="btn btn-light me-md-2" type="button">💾</button>
-								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+								<button v-html="input.fileName" class="btn btn-light me-md-2" type="button" disabled></button>
+								<button @click="copyToClipboard(input.raw)"  class="btn btn-light" type="button" title="csv to clipboard">📋 copy</button>
 							  </div>
-							  -->
 							</div>
 							<div class="card-body">
 								<div class="form-floating mb-3">
@@ -213,20 +210,15 @@
 								</div>
 							</div>
 						</div>
-						
-
 					</div>
 					<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="card">
 							<div class="card-header">
-							 
-							  
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
 								<button class="btn btn-light me-md-2" type="button" disabled>json-ld</button>
 								<button @click="saveCdi()" class="btn btn-light me-md-2" type="button" title="save ddi-cdi">💾 save</button>
-								<!--<button class="btn btn-light" type="button" title="copy to clipboard">📋</button> -->
+								<button @click="copyToClipboard(output.cdi)"  class="btn btn-light" type="button" title="copy ddi-cdi to clipboard">📋 copy</button>
 							  </div>
-							  
 							</div>
 							<div class="card-body">
 								<div class="form-floating mb-3">
@@ -238,14 +230,11 @@
 					<div class="tab-pane fade" id="ddil" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="card">
 							<div class="card-header">
-							 <span>ddi-l xml</span> 
-							  <!--
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								
-								<button class="btn btn-light me-md-2" type="button">💾</button>
-								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+								<button class="btn btn-light me-md-2" type="button" disabled>ddi-l</button>
+								<!--<button class="btn btn-light me-md-2" type="button">💾</button> -->
+								<button @click="copyToClipboard(output.ddiL)"  class="btn btn-light" type="button" title="copy to clipboard">📋</button>
 							  </div>
-							  -->
 							</div>
 							<div class="card-body">
 								<div class="form-floating mb-3">
@@ -257,14 +246,11 @@
 					<div class="tab-pane fade" id="ddic" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 						<div class="card">
 							<div class="card-header">
-							 <span>ddi-c xml</span> 
-							  <!--
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								
-								<button class="btn btn-light me-md-2" type="button">💾</button>
-								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+								<button class="btn btn-light me-md-2" type="button" disabled>ddi-c</button>
+								<!--<button class="btn btn-light me-md-2" type="button">💾</button>-->
+								<button @click="copyToClipboard(output.ddiC)"  class="btn btn-light" type="button" title="copy to clipboard">📋</button>
 							  </div>
-							  -->
 							</div>
 							<div class="card-body">
 								<div class="form-floating mb-3">

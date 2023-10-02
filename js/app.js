@@ -33,6 +33,13 @@ createApp({
             this.input.size = example.raw.length
             this.reloadCsv()
         },
+        copyToClipboard(text){
+            navigator.clipboard.writeText(text).then(() => {
+                console.log('Content copied to clipboard');
+            },() => {
+                console.error('Failed to copied to clipboard');
+            });
+        },
         reloadCsv(){
             if(this.input.fileName == null) return;
             
