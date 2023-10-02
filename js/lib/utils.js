@@ -2,7 +2,7 @@ class Column{
     id
     name
     displayLabel
-    hasIntendedDataType
+    hasIntendedDataType = ""
     role
 	position
     coded = false
