@@ -200,23 +200,81 @@
 				</ul>
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade" id="csv" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-						<div class="form-floating mb-3">
-							<pre><code v-html="input.raw" class="language-csv"></code></pre>
+						<div class="card">
+							<div class="card-header">
+							 <span v-html="input.fileName"></span> 
+							  <!--
+							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+								
+								<button class="btn btn-light me-md-2" type="button">💾</button>
+								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+							  </div>
+							  -->
+							</div>
+							<div class="card-body">
+								<div class="form-floating mb-3">
+									<pre><code v-html="input.raw" class="language-csv"></code></pre>
+								</div>
+							</div>
 						</div>
+						
+
 					</div>
 					<div class="tab-pane fade show active" id="cdi" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-						<div class="form-floating mb-3">
-							<pre><code v-html="outputFormated.cdi" class="language-json"></code></pre>
+						<div class="card">
+							<div class="card-header">
+							 <span>json-ld</span> 
+							  <!--
+							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+								
+								<button class="btn btn-light me-md-2" type="button">💾</button>
+								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+							  </div>
+							  -->
+							</div>
+							<div class="card-body">
+								<div class="form-floating mb-3">
+									<pre><code v-html="outputFormated.cdi" class="language-json"></code></pre>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="ddil" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-						<div class="form-floating mb-3">
-							<pre><code v-html="outputFormated.ddiL" class="language-xml"></code></pre>
+						<div class="card">
+							<div class="card-header">
+							 <span>ddi-l xml</span> 
+							  <!--
+							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+								
+								<button class="btn btn-light me-md-2" type="button">💾</button>
+								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+							  </div>
+							  -->
+							</div>
+							<div class="card-body">
+								<div class="form-floating mb-3">
+									<pre><code v-html="outputFormated.ddiL" class="language-xml"></code></pre>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="ddic" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-						<div class="form-floating mb-3">
-							<pre><code v-html="outputFormated.ddiC" class="language-xml"></code></pre>
+						<div class="card">
+							<div class="card-header">
+							 <span>ddi-c xml</span> 
+							  <!--
+							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+								
+								<button class="btn btn-light me-md-2" type="button">💾</button>
+								<button class="btn btn-light" type="button" title="copy to clipboard">📋</button>
+							  </div>
+							  -->
+							</div>
+							<div class="card-body">
+								<div class="form-floating mb-3">
+									<pre><code v-html="outputFormated.ddiC" class="language-xml"></code></pre>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
