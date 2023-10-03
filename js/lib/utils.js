@@ -227,3 +227,13 @@ function guessType(values){
     if(values.every(i => typeof i === "string")) return  base +'String';
     return null;
 }
+
+function guessDelimiter(csvContent){
+    for(const delimiter of [',', ';', '|', '\t']){
+        var csv = CSVToArray(csvContent, delimiter)
+        // TODO: do a bit more intelligent check...
+        if(csv[0].length > 1 && csv.length > 1) return delimiter;
+    }
+
+    return ','
+}

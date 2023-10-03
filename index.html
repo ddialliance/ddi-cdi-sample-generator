@@ -60,7 +60,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv">📂 open csv</button>
+							<button @click="openCsv()" type="button" class="btn btn-light" title="open csv or tsv file">📂 open csv</button>
 						</li>
 						<li class="nav-item">
 							<button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#aboutModal" title="about this app">ℹ️ about</button>
@@ -74,7 +74,7 @@
 		<div v-if="input.fileName == null" class="alert alert-primary d-flex align-items-center gap-2" role="alert">
 			<div>
 				<strong><span>ℹ️</span>DDI-CDI Sample Generator</strong><br/> 
-				Open a csv data file of load one of the examples.<br/>
+				Open a csv/tsv data file of load one of the examples.<br/>
 				<br />
 				<strong>🗃️ example csv:s</strong>
 				

@@ -5,7 +5,7 @@ createApp({
         openCsv(){
             let inputElement = document.createElement('input')
             inputElement.type = 'file'
-            inputElement.accept = '.csv'
+            inputElement.accept = '.csv,.tsv'
             inputElement.onchange = _ => {
                 let file = Array.from(inputElement.files)[0];
                 this.input.fileName = file.name
@@ -16,6 +16,8 @@ createApp({
 
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result
+                    console.log('guessDelimiter',guessDelimiter(content))
+                    this.input.delimiter = guessDelimiter(content)
                     this.input.raw = content
                     this.reloadCsv()
                 }
