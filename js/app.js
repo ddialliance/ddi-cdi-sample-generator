@@ -16,7 +16,6 @@ createApp({
 
                 reader.onload = readerEvent => {
                     var content = readerEvent.target.result
-                    console.log('guessDelimiter',guessDelimiter(content))
                     this.input.delimiter = guessDelimiter(content)
                     this.input.raw = content
                     this.reloadCsv()

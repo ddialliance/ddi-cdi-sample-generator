@@ -219,7 +219,6 @@ function guessType(values){
     var intReg = /^\d+$/;
     var doubleReg = /\d+\.\d*|\.?\d+/
     var dateReg = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
-    console.log('guess type', values)
     
     if(values.every(i => intReg.test(i))) return base + 'Integer';
 
