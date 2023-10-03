@@ -97,6 +97,7 @@ createApp({
             colTypes : [
                 {label:'String', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#String"},
                 {label:'Integer', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Integer"}, 
+                {label:'Double', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Double"}, 
                 {label:'Date', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#Date"},
                 {label:'DateTime', id: "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#DateTime"}
             ]

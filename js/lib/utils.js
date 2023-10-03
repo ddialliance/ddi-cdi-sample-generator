@@ -217,9 +217,13 @@ function guessType(values){
     const base = "http://rdf-vocabulary.ddialliance.org/cv/DataType/1.1.2/#";     
     
     var intReg = /^\d+$/;
+    var doubleReg = /\d+\.\d*|\.?\d+/
     var dateReg = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/
+    console.log('guess type', values)
     
     if(values.every(i => intReg.test(i))) return base + 'Integer';
+
+    if(values.every(i => doubleReg.test(i))) return base + 'Double';
 
     // TODO: work out a better date test
     if(values.every(i => dateReg.test(i))) return base + 'Date';

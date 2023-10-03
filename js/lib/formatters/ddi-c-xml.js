@@ -69,6 +69,8 @@ function getVarRepresentationType(column){
         return "text"
     }else if(column.hasIntendedDataType.endsWith("Integer")){
         return "numeric"
+    }else if(column.hasIntendedDataType.endsWith("Double")){
+        return "numeric"
     }else if(column.hasIntendedDataType.endsWith("DateTime")){
         return "datetime"
     }
