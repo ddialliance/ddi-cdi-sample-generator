@@ -9,6 +9,7 @@ createApp({
             inputElement.onchange = _ => {
                 let file = Array.from(inputElement.files)[0];
                 this.input.fileName = file.name
+                
                 this.input.type = file.type
                 this.input.size = file.size
                 var reader = new FileReader()
@@ -28,6 +29,10 @@ createApp({
             var fileNameToSaveAs = this.input.fileName.replace('.csv', '.jsonld')
             saveFile(fileNameToSaveAs, textFileAsBlob)
         },
+        saveFile(content, type, fileName){
+            var fileAsBlob = new Blob([ content ], { type: type })
+            saveFileBrowser(fileName, fileAsBlob)
+        },
         loadExample(example){
             this.input.raw = example.raw
             this.input.fileName = example.fileName
@@ -36,14 +41,15 @@ createApp({
         },
         copyToClipboard(text){
             navigator.clipboard.writeText(text).then(() => {
-                console.log('Content copied to clipboard');
+                console.log("Content copied to clipboard");
             },() => {
-                console.error('Failed to copied to clipboard');
+                console.error("Failed to cpy to clipboard");
             });
         },
         reloadCsv(){
             if(this.input.fileName == null) return;
-            
+            this.input.fileNameWithoutExtension = this.input.fileName.split('.').slice(0, -1).join('.');
+            console.log(this.input.fileNameWithoutExtension)
             var csv = CSVToArray(this.input.raw, this.input.delimiter)
             
             this.input.recordCount = csv.length
@@ -84,6 +90,7 @@ createApp({
         ]
         const input = reactive({
             fileName: null,
+            fileNameWithoutExtension: "",
             type: 'text/csv',
             delimiter: ',',
             firstRowIsHeader: true,

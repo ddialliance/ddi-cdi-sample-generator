@@ -112,7 +112,7 @@ function createTextNode(xmlDoc, ns, name, text){
     return element
 }
 
-function saveFile(fileName, content){
+function saveFileBrowser(fileName, content){
   
     var downloadLink = document.createElement("a")
     downloadLink.download = fileName

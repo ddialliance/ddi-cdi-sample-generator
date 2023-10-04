@@ -223,7 +223,7 @@
 							<div class="card-header">
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
 								<button v-html="input.fileName" class="btn btn-light me-md-2" type="button" disabled></button>
-								<button @click="copyToClipboard(input.raw)"  class="btn btn-light" type="button" title="csv to clipboard">📋 copy</button>
+								<button @click="copyToClipboard(input.raw)"  class="btn btn-light" type="button" title="copy csv to clipboard">📋 copy</button>
 							  </div>
 							</div>
 							<div class="card-body">
@@ -237,8 +237,8 @@
 						<div class="card">
 							<div class="card-header">
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								<button class="btn btn-light me-md-2" type="button" disabled>json-ld</button>
-								<button @click="saveCdi()" class="btn btn-light me-md-2" type="button" title="save ddi-cdi">💾 save</button>
+								<button v-html="input.fileNameWithoutExtension + '.jsonld'" class="btn btn-light me-md-2" type="button" disabled></button>
+								<button @click="saveFile(output.cdi, 'application/ld+json', input.fileNameWithoutExtension + '.jsonld')" class="btn btn-light me-md-2" type="button" title="save ddi-cdi">💾 save</button>
 								<button @click="copyToClipboard(output.cdi)"  class="btn btn-light" type="button" title="copy ddi-cdi to clipboard">📋 copy</button>
 							  </div>
 							</div>
@@ -253,8 +253,8 @@
 						<div class="card">
 							<div class="card-header">
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								<button class="btn btn-light me-md-2" type="button" disabled>ddi-l</button>
-								<!--<button class="btn btn-light me-md-2" type="button">💾</button> -->
+								<button v-html="input.fileNameWithoutExtension + '.ddi-l.xml'" class="btn btn-light me-md-2" type="button" disabled></button>
+								<button @click="saveFile(output.ddiL, 'application/xml', input.fileNameWithoutExtension + '.ddi-l.xml')" class="btn btn-light me-md-2" type="button">💾</button>
 								<button @click="copyToClipboard(output.ddiL)"  class="btn btn-light" type="button" title="copy to clipboard">📋</button>
 							  </div>
 							</div>
@@ -269,8 +269,8 @@
 						<div class="card">
 							<div class="card-header">
 							  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-								<button class="btn btn-light me-md-2" type="button" disabled>ddi-c</button>
-								<!--<button class="btn btn-light me-md-2" type="button">💾</button>-->
+								<button v-html="input.fileNameWithoutExtension + '.ddi-c.xml'" class="btn btn-light me-md-2" type="button" disabled></button>
+								<button @click="saveFile(output.ddiC, 'application/xml', input.fileNameWithoutExtension + '.ddi-c.xml')" class="btn btn-light me-md-2" type="button">💾</button>
 								<button @click="copyToClipboard(output.ddiC)"  class="btn btn-light" type="button" title="copy to clipboard">📋</button>
 							  </div>
 							</div>
