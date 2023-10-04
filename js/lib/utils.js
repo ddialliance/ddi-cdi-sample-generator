@@ -7,6 +7,7 @@ class Column{
 	position
     coded = false
     codeList = []
+    catStat = {}
     values = []
     constructor(id, position, values){
 		this.position = position
@@ -19,6 +20,16 @@ class Column{
             this.name = id
         }
         this.id = id.replace(/\W/g,'_')
+        this.calculateCatStat()
+    }
+    calculateCatStat(){
+        for(const val of this.values){
+            if (this.catStat[val]) {
+                this.catStat[val] += 1
+            } else {
+                this.catStat[val] = 1
+            }
+        }
     }
     toJSON(){
         var variable = {

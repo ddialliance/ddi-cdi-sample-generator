@@ -49,6 +49,10 @@ function toDdiCXml(input){
                     catgry.appendChild(createTextNode(xmlDoc, ns, "labl", code.prefLabel))
                 }
 
+                var catStat = createTextNode(xmlDoc, ns, "catStat", c.catStat[code.notation])
+                catStat.setAttribute("type", "freq")
+                catgry.appendChild(catStat)
+                
                 v.appendChild(catgry)
             }
         }
