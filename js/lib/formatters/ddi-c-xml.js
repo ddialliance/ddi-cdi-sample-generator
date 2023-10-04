@@ -28,19 +28,19 @@ function toDdiCXml(input){
     var dataDscr = xmlDoc.createElementNS(ns, "dataDscr")
     dataDscr.setAttribute("source", "producer")
 
-    for(const c of input.columns){
-        var v = xmlDoc.createElementNS(ns, "var")
-        v.setAttribute("ID", c.id)
-        v.setAttribute("name", c.name)
-        v.setAttribute("files", input.fileName)
-        v.setAttribute("representationType", getVarRepresentationType(c))
+    for(const column of input.columns){
+        var variable = xmlDoc.createElementNS(ns, "var")
+        variable.setAttribute("ID", column.id)
+        variable.setAttribute("name", column.name)
+        variable.setAttribute("files", input.fileName)
+        variable.setAttribute("representationType", getVarRepresentationType(column))
 
-        if(c.displayLabel){
-            v.appendChild(createTextNode(xmlDoc, ns, "labl", c.displayLabel))
+        if(column.displayLabel){
+            variable.appendChild(createTextNode(xmlDoc, ns, "labl", column.displayLabel))
         }
 
-        if(c.coded){
-            for(const code of c.codeList){
+        if(column.coded){
+            for(const code of column.codeList){
                 var catgry = xmlDoc.createElementNS(ns, "catgry")
 
                 catgry.appendChild(createTextNode(xmlDoc, ns, "catValu", code.notation))
@@ -49,15 +49,15 @@ function toDdiCXml(input){
                     catgry.appendChild(createTextNode(xmlDoc, ns, "labl", code.prefLabel))
                 }
 
-                var catStat = createTextNode(xmlDoc, ns, "catStat", c.catStat[code.notation])
+                var catStat = createTextNode(xmlDoc, ns, "catStat", column.catStat[code.notation])
                 catStat.setAttribute("type", "freq")
                 catgry.appendChild(catStat)
                 
-                v.appendChild(catgry)
+                variable.appendChild(catgry)
             }
         }
 
-        dataDscr.appendChild(v)
+        dataDscr.appendChild(variable)
     }
 
     codeBook.appendChild(dataDscr)
