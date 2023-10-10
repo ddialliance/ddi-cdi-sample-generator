@@ -62,8 +62,9 @@ function toDdiCXml(input){
 
     codeBook.appendChild(dataDscr)
 
+    var prolog = '<?xml version="1.0" encoding="UTF-8"?>'
     var xmlString = new XMLSerializer().serializeToString(xmlDoc)
-    return formatXml(xmlString)
+    return prolog + "\n" + formatXml(xmlString)
 }
 
 function getVarRepresentationType(column){
