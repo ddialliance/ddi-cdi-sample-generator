@@ -46,8 +46,11 @@ createApp({
                 console.error("Failed to cpy to clipboard");
             });
         },
-        reloadCsv(){
+        async reloadCsv(){
             if(this.input.fileName == null) return;
+            
+            this.input.fileHash.sha256 = await hashString(this.input.raw, "SHA-256")
+
             this.input.fileNameWithoutExtension = this.input.fileName.split(".").slice(0, -1).join(".");
             console.log(this.input.fileNameWithoutExtension)
             var csv = CSVToArray(this.input.raw, this.input.delimiter)
@@ -72,6 +75,9 @@ createApp({
         const examples = getCsvExamples()
         const input = reactive({
             fileName: null,
+            fileHash: {
+                sha256: ""
+            },
             raw: "",
             fileNameWithoutExtension: "",
             type: "text/csv",

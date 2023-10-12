@@ -213,6 +213,17 @@ function CSVToArray(strData, strDelimiter){
     return( arrData );
 }
 
+function hashString(string, type){
+    const utf8 = new TextEncoder().encode(string);
+    return crypto.subtle.digest(type, utf8).then((hashBuffer) => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray
+        .map((bytes) => bytes.toString(16).padStart(2, '0'))
+        .join('');
+      return hashHex;
+    });
+}
+
 function getColumnValues(csv, columnIndex, haveHeader){
     var startRow = 0
     if(haveHeader) startRow = 1;
